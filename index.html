@@ -11,46 +11,550 @@
   <meta property="og:url" content="https://atin17.github.io/" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' x='0.1em' font-size='90'%3E%F0%9F%92%AB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b1020;--panel:#0f172a;--muted:#94a3b8;--text:#e5e7eb;--brand:#22d3ee;--brand-2:#a78bfa;--accent:#34d399;--card:#0b1226;--shadow:0 10px 30px rgba(2,8,23,.35)
+      --bg: #0a0e1a;
+      --panel: #0f1419;
+      --panel-elevated: #141922;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.15);
+      --text: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --brand: #60a5fa;
+      --brand-light: #93c5fd;
+      --accent: #34d399;
+      --accent-secondary: #a78bfa;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";background:var(--bg);color:var(--text);}
-    a{color:var(--brand);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:1080px;margin:0 auto;padding:24px}
-    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(11,16,32,.95),rgba(11,16,32,.6) 60%,rgba(11,16,32,0));backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid rgba(148,163,184,.15)}
-    nav{display:flex;align-items:center;justify-content:space-between}
-    .nav-right a{margin-left:18px;font-weight:600;color:#cbd5e1}
-    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#001018;font-weight:700;box-shadow:var(--shadow)}
-    .btn.secondary{background:#0b1226;color:#e5e7eb;border:1px solid rgba(148,163,184,.25)}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:42px 0}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(148,163,184,.3);border-radius:999px;color:#cbd5e1}
-    .h1{font-size:44px;line-height:1.1;margin:14px 0 10px}
-    .lede{color:var(--muted);font-size:18px;max-width:70ch}
-    .card{background:var(--panel);border:1px solid rgba(148,163,184,.15);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
-    .grid{display:grid;gap:18px}
-    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
-    .section{padding:22px 0}
-    h2{font-size:22px;margin:0 0 12px}
-    h3{margin:0 0 8px;font-size:18px}
-    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#0b1226;border:1px solid rgba(148,163,184,.25);color:#cbd5e1;margin:4px 6px 0 0;font-size:12px}
-    footer{margin:40px 0 24px;color:#94a3b8;text-align:center}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:13px}
-    .kicker{color:#a5b4fc;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .pub-meta{color:#94a3b8;font-size:13px}
-    .cvbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-    @media (max-width: 900px){.hero{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr}.grid.cols-2{grid-template-columns:1fr}}
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Background gradient animation */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.08) 0%, transparent 50%);
+      animation: gradientShift 15s ease infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-5%, -5%) rotate(5deg); }
+    }
+
+    a {
+      color: var(--brand-light);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--brand);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 14, 26, 0.8);
+      backdrop-filter: blur(12px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(10, 14, 26, 0.95);
+      box-shadow: var(--shadow-md);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+
+    .logo {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--brand-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--text-secondary);
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 100px 0 80px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 100px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .availability-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--brand-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 600px;
+    }
+
+    .subtitle strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--accent-secondary) 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(96, 165, 250, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(96, 165, 250, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--panel-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--panel);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Focus Card */
+    .focus-card {
+      background: linear-gradient(135deg, var(--panel) 0%, var(--panel-elevated) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .focus-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .focus-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--brand-light);
+      margin-bottom: 20px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 8px 16px;
+      background: rgba(96, 165, 250, 0.1);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--brand-light);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(96, 165, 250, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Section Styles */
+    section {
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+
+    /* Card Grid */
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--brand) 0%, var(--accent-secondary) 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .card ul {
+      list-style: none;
+      margin: 16px 0 0 0;
+    }
+
+    .card ul li {
+      color: var(--text-secondary);
+      padding-left: 24px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--brand);
+    }
+
+    .meta {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: rgba(96, 165, 250, 0.05);
+      border-left: 4px solid var(--brand);
+      padding: 20px;
+      margin: 16px 0;
+      border-radius: 8px;
+    }
+
+    .info-box p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Contact Section */
+    .contact-card {
+      background: linear-gradient(135deg, var(--panel) 0%, var(--panel-elevated) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contact-card h2 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .contact-card .subtitle {
+      margin: 0 auto 32px;
+    }
+
+    .contact-methods {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-method:hover {
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      margin: 0 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 40px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 0 40px;
+      }
+
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      section {
+        padding: 50px 0;
+      }
+
+      .contact-card {
+        padding: 32px 24px;
+      }
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--brand);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 99;
+      box-shadow: var(--shadow-md);
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
   </style>
 </head>
 <body>
-  <header>
+  <header id="header">
     <div class="container">
       <nav>
-        <div class="nav-left mono">atin17.github.io</div>
-        <div class="nav-right">
+        <div class="logo">atin17.github.io</div>
+        <div class="nav-links">
           <a href="#about">About</a>
           <a href="#research">Research</a>
           <a href="#publications">Publications</a>
@@ -64,123 +568,241 @@
   <main class="container">
     <section class="hero">
       <div>
-        <span class="badge">Open to Summer 2026 Research Internships</span>
-        <h1 class="h1">Atin Srivastava</h1>
-        <p class="lede">Ph.D. student, Computer Science @ Rutgers University (Computational Brain Lab). I build <strong>neuron–astrocyte associative memory</strong> models, <strong>spiking/RL agents</strong>, and <strong>closed‑loop motor control</strong> systems. Long‑term: brain‑inspired AI that can <em>compose</em> memories and generalize.
+        <div class="availability-badge">
+          Available for Summer 2026 Research Internships
+        </div>
+        <h1>Atin Srivastava</h1>
+        <p class="subtitle">
+          Ph.D. student in Computer Science at <strong>Rutgers University</strong> (Computational Brain Lab). 
+          I build <strong>neuron–astrocyte associative memory</strong> models, <strong>spiking/RL agents</strong>, 
+          and <strong>closed‑loop motor control</strong> systems. My long‑term goal: brain‑inspired AI that can 
+          <em>compose memories</em> and generalize intelligently.
         </p>
-        <div class="cvbar">
-          <a class="btn" href="#contact">Email me</a>
-          <a class="btn secondary" href="https://github.com/atin17" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn secondary" href="https://www.linkedin.com/in/atin-srivastava" target="_blank" rel="noopener">LinkedIn</a>
-          <!-- Replace the href below with your CV PDF once uploaded to the repo -->
-          <a class="btn secondary" href="./Atin_Srivastava_CV.pdf">Download CV (PDF)</a>
+        <div class="cta-buttons">
+          <a href="#contact" class="btn btn-primary">Get in Touch</a>
+          <a href="./Atin_Srivastava_CV.pdf" class="btn btn-secondary">Download CV</a>
+          <a href="https://github.com/atin17" target="_blank" class="btn btn-secondary">GitHub</a>
+          <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" class="btn btn-secondary">LinkedIn</a>
         </div>
       </div>
-      <div class="card">
-        <div class="kicker">Research focus</div>
-        <div style="margin-top:10px">
-          <span class="pill">Neuron–astrocyte memory</span>
-          <span class="pill">Composite/hierarchical recall</span>
-          <span class="pill">Spiking & neuromorphic (Loihi)</span>
-          <span class="pill">RL with episodic/working memory</span>
-          <!-- <span class="pill">ALM choice selectivity</span> -->
-          <span class="pill">Rehabilitation Robots</span>
-          <!-- <span class="pill">EEG decoding</span> -->
+      <div class="focus-card">
+        <div class="focus-title">Research Focus</div>
+        <div class="tags">
+          <span class="tag">Neuron–Astrocyte Memory</span>
+          <span class="tag">Composite Recall</span>
+          <span class="tag">Spiking Networks</span>
+          <span class="tag">Neuromorphic (Loihi)</span>
+          <span class="tag">RL & Working Memory</span>
+          <span class="tag">Rehab Robotics</span>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <h2>About</h2>
-      <div class="grid cols-2">
+    <section id="about">
+      <div class="section-header">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">Background, expertise, and academic journey</p>
+      </div>
+      <div class="grid grid-2">
         <div class="card">
-          <p><strong>CS Ph.D. Student</strong> at Rutgers (GPA 4.0). Advised by Prof. <a href="http://combra.cs.rutgers.edu/" target="_blank" rel="noopener">Konstantinos Michmizos</a>.</p>
-          <p>Peer reviewer for IEEE EMBC.</p>
-          <p>Previously Software Engineer at Amdocs (microservices, CI).</p>
+          <h3>Academic Background</h3>
+          <p>
+            Currently pursuing a <strong>Ph.D. in Computer Science</strong> at Rutgers University with a perfect 4.0 GPA. 
+            My research is supervised by Prof. <a href="http://combra.cs.rutgers.edu/" target="_blank">Konstantinos Michmizos</a> 
+            at the Computational Brain Lab.
+          </p>
+          <div class="info-box">
+            <p><strong>Peer Reviewer:</strong> IEEE Engineering in Medicine and Biology Conference (EMBC)</p>
+          </div>
+          <p>
+            Prior to my doctoral studies, I worked as a <strong>Software Engineer at Amdocs</strong>, 
+            developing microservices architectures and CI/CD pipelines.
+          </p>
         </div>
         <div class="card">
-          <p class="mono">Research interests → memory systems & consolidation; astrocyte modulation; recurrent/spiking dynamics; neuromorphic deployment; control & motor learning; neural decoding.</p>
+          <h3>Research Interests</h3>
+          <p>My work sits at the intersection of neuroscience and artificial intelligence:</p>
+          <ul>
+            <li>Memory systems & consolidation mechanisms</li>
+            <li>Astrocyte modulation in neural networks</li>
+            <li>Recurrent & spiking neural dynamics</li>
+            <li>Neuromorphic hardware deployment</li>
+            <li>Motor control & learning algorithms</li>
+            <li>Neural decoding & brain-computer interfaces</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="research" class="section">
-      <h2>Active Research</h2>
-      <div class="grid cols-2">
+    <section id="research">
+      <div class="section-header">
+        <h2 class="section-title">Active Research</h2>
+        <p class="section-subtitle">Current projects pushing the boundaries of brain-inspired computing</p>
+      </div>
+      <div class="grid grid-2">
         <article class="card">
           <h3>Neuron–Astrocyte Associative Memory</h3>
-          <p>Astrocyte‑inspired gating stabilizes co‑active patterns and enables composition at recall; reduces false recalls and boosts composite top‑1 on CIFAR‑10/ImageNet subsets.</p>
+          <p>
+            Developing astrocyte‑inspired gating mechanisms that stabilize co‑active patterns and enable 
+            compositional recall. This approach significantly reduces false recalls and boosts composite 
+            top‑1 accuracy on CIFAR‑10 and ImageNet subsets.
+          </p>
           <ul>
-            <li>Evaluation suite with ablations (no‑astro, no‑time, shuffled).</li>
-            <li>PyTorch codebase, config sweeps, Loihi‑ready hooks.</li>
+            <li>Comprehensive evaluation suite with ablation studies (no‑astro, no‑time, shuffled controls)</li>
+            <li>Full PyTorch implementation with configurable hyperparameter sweeps</li>
+            <li>Loihi‑ready architecture with neuromorphic deployment hooks</li>
           </ul>
         </article>
+
         <article class="card">
-          <h3>Memory Synthesis & Few‑shot Bridging</h3>
-          <p>Compose novel “child” memories from parent primitives; zero‑shot recognition of unseen composites and rapid 1–5‑shot adaptation.</p>
+          <h3>Memory Synthesis & Few‑Shot Bridging</h3>
+          <p>
+            Investigating how to compose novel "child" memories from primitive parent patterns, enabling 
+            zero‑shot recognition of unseen composites and rapid 1–5‑shot adaptation to new concepts.
+          </p>
           <ul>
-            <li>Pretrain on synthetic composites → adapt with sparse real exemplars.</li>
-            <li>Identified failure modes & mitigations (astro gate, bin‑width tuning).</li>
+            <li>Pretrain on synthetic composite patterns, then adapt with sparse real exemplars</li>
+            <li>Systematic identification of failure modes with targeted mitigations</li>
+            <li>Optimization of astrocyte gating and temporal bin‑width parameters</li>
           </ul>
         </article>
+
         <article class="card">
-          <h3>Closed‑loop Rehab Controller</h3>
-          <p>Continuous‑attractor SNN state map + assistance‑as‑needed control on the InMotion Bionik Arm; assistance ∝ (1−confidence).</p>
+          <h3>Closed‑Loop Rehabilitation Controller</h3>
+          <p>
+            Building continuous‑attractor spiking neural network state maps combined with assistance‑as‑needed 
+            control for the InMotion Bionik robotic arm. Assistance scales proportionally to (1−confidence).
+          </p>
           <ul>
-            <li>Metrics: completion time, path deviation, assistance work, basin volume.</li>
+            <li>Real-time metrics: completion time, path deviation, assistance work</li>
+            <li>Basin volume analysis for controller stability assessment</li>
+            <li>Adaptive support that promotes patient engagement and recovery</li>
           </ul>
         </article>
       </div>
     </section>
 
-    <section id="publications" class="section">
-      <h2>Publications & Thesis</h2>
+    <section id="publications">
+      <div class="section-header">
+        <h2 class="section-title">Publications & Thesis</h2>
+        <p class="section-subtitle">Academic contributions and research outputs</p>
+      </div>
       <div class="grid">
         <div class="card">
           <h3>Excitatory–Inhibitory Recurrent SNN for Face Detection and Tracking by a Robotic Oculomotor Head</h3>
-          <div class="pub-meta">Master's Thesis, Rutgers University (2024) — with K. Michmizos</div>
-          <p><a href="https://www.proquest.com/openview/a95a3ad649b612eaa28156167d50d2ba/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener">ProQuest</a></p>
+          <div class="meta">Master's Thesis • Rutgers University • 2024 • Advisor: K. Michmizos</div>
+          <p>
+            Developed a biologically-inspired spiking neural network for real-time face detection and tracking, 
+            demonstrating the potential of neuromorphic approaches for robotic vision systems.
+          </p>
+          <a href="https://www.proquest.com/openview/a95a3ad649b612eaa28156167d50d2ba/1?pq-origsite=gscholar&cbl=18750&diss=y" target="_blank">
+            View on ProQuest →
+          </a>
         </div>
+
         <div class="card">
           <h3>Cognition in Sensory Cortex</h3>
-          <div class="pub-meta">RUCCS Colloquium — manuscript accepted (Academia Biology), 2025</div>
+          <div class="meta">RUCCS Colloquium • Manuscript accepted (Academia Biology) • 2025</div>
+          <p>
+            Exploring the computational principles underlying cognitive processing in sensory cortical areas, 
+            bridging low-level perception with high-level reasoning.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="section">
-      <h2>Selected Projects</h2>
-      <div class="grid cols-3">
+    <section id="projects">
+      <div class="section-header">
+        <h2 class="section-title">Selected Projects</h2>
+        <p class="section-subtitle">Notable implementations and demonstrations</p>
+      </div>
+      <div class="grid grid-3">
         <div class="card">
           <h3>Spiking Oculomotor Controller</h3>
-          <p>SNN controller in Python/ROS; faster response (~15%) and higher accuracy (~18%) vs. baseline; museum demo.</p>
+          <p>
+            Implemented a spiking neural network controller in Python/ROS achieving ~15% faster response times 
+            and ~18% higher accuracy compared to baseline approaches. Successfully demonstrated at museum exhibitions.
+          </p>
         </div>
+
         <div class="card">
           <h3>RL with Working & Episodic Memory</h3>
-          <p>DeepMind replication (Fortunato et al.): key‑value memory + CPC loss + stop‑gradient → ~40% better task generalization.</p>
+          <p>
+            Replicated DeepMind's Fortunato et al. architecture combining key‑value memory, CPC loss, and 
+            stop‑gradient techniques, achieving ~40% improvement in task generalization performance.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Neural Decoding Pipeline</h3>
+          <p>
+            End-to-end pipeline for processing and decoding neural signals, with applications in 
+            brain-computer interfaces and motor intention prediction.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <div class="card">
-        <p>Email: <a href="mailto:atin.srivastava75@gmail.com">atin.srivastava75@gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/atin17" target="_blank" rel="noopener">@atin17</a> · LinkedIn: <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" rel="noopener">/in/atin-srivastava</a></p>
-        <p>Location: New Brunswick, NJ · Availability: Summer 2026 (May–Aug)</p>
+    <section id="contact">
+      <div class="contact-card">
+        <h2>Let's Connect</h2>
+        <p class="subtitle">
+          I'm always interested in discussing research collaborations, internship opportunities, 
+          or innovative projects in computational neuroscience and AI.
+        </p>
+        <div class="contact-methods">
+          <a href="mailto:atin.srivastava75@gmail.com" class="contact-method">
+            <span>📧</span>
+            <span>atin.srivastava75@gmail.com</span>
+          </a>
+          <a href="https://github.com/atin17" target="_blank" class="contact-method">
+            <span>💻</span>
+            <span>@atin17</span>
+          </a>
+          <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" class="contact-method">
+            <span>💼</span>
+            <span>/in/atin-srivastava</span>
+          </a>
+        </div>
+        <div class="info-box" style="margin-top: 32px; display: inline-block; text-align: left;">
+          <p><strong>Location:</strong> New Brunswick, NJ</p>
+          <p><strong>Availability:</strong> Summer 2026 (May–August)</p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    © <span id="year"></span> Atin Srivastava · Built for GitHub Pages · <a href="#top">Back to top</a>
+    <div class="container">
+      <p>© <span id="year"></span> Atin Srivastava • Built for GitHub Pages</p>
+      <p>
+        <a href="#top">Back to top ↑</a>
+      </p>
+    </div>
   </footer>
+
+  <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    ↑
+  </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    const scrollTop = document.getElementById('scrollTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+        scrollTop.classList.add('visible');
+      } else {
+        header.classList.remove('scrolled');
+        scrollTop.classList.remove('visible');
+      }
+    });
   </script>
 
-  <!-- Structured data for rich snippets -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -194,9 +816,8 @@
       "https://github.com/atin17",
       "https://www.linkedin.com/in/atin-srivastava"
     ],
-    "knowsAbout": ["Neuron–astrocyte memory","Spiking neural networks","Reinforcement learning","Neuromorphic computing","Rehabilitation robotics","EEG decoding"]
+    "knowsAbout": ["Neuron–astrocyte memory","Spiking neural networks","Reinforcement learning","Neuromorphic computing","Rehabilitation robotics","Neural decoding"]
   }
   </script>
 </body>
 </html>
- 
