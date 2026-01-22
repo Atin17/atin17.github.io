@@ -367,9 +367,7 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
-    .card-wide {
-      grid-column: span 2;
-    }
+
 
     .card {
       background: var(--panel);
@@ -585,9 +583,7 @@
         grid-template-columns: 1fr;
       }
 
-      .card-wide {
-        grid-column: span 1;
-      }
+
 
       .nav-links {
         gap: 20px;
@@ -807,8 +803,8 @@
         <h2 class="section-title">Selected Projects</h2>
         <p class="section-subtitle">Notable implementations and demonstrations</p>
       </div>
-      <div class="grid">
-        <div class="card card-wide">
+      <div class="grid grid-2">
+        <div class="card">
           <div class="project-media-container">
             <img src="oculomotor_research.png" alt="Spiking Oculomotor Controller Architecture" class="project-image">
             <div class="video-container">
@@ -829,14 +825,6 @@
         </div>
 
         <div class="card">
-          <h3>RL with Working & Episodic Memory</h3>
-          <p>
-            Replicated DeepMind's Fortunato et al. architecture combining key‑value memory, CPC loss, and 
-            stop‑gradient techniques, achieving ~40% improvement in task generalization performance.
-          </p>
-        </div>
-
-        <div class="card">
           <div class="research-image-container">
             <img src="neural_decoding.png" alt="NeuroAI Lab Platform" class="research-image">
           </div>
@@ -845,6 +833,14 @@
             End-to-end platform for processing and decoding neural signals, with applications in 
             brain-computer interfaces and motor intention prediction. Features data ingestion, exploration, 
             visualization, model training, and experiment tracking.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>RL with Working & Episodic Memory</h3>
+          <p>
+            Replicated DeepMind's Fortunato et al. architecture combining key‑value memory, CPC loss, and 
+            stop‑gradient techniques, achieving ~40% improvement in task generalization performance.
           </p>
         </div>
       </div>
