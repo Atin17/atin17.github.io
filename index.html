@@ -431,6 +431,58 @@
       color: var(--brand);
     }
 
+    .research-image-container {
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .research-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .research-image:hover {
+      transform: scale(1.05);
+    }
+
+    .project-media-container {
+      margin-bottom: 20px;
+    }
+
+    .project-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+    }
+
     .meta {
       font-size: 14px;
       color: var(--text-muted);
@@ -614,8 +666,9 @@
         <div class="focus-title">Research Focus</div>
         <div class="tags">
           <span class="tag">Neuron–Astrocyte Memory</span>
-          <span class="tag">Spiking Neural Networks</span>
-          <span class="tag">Neuromorphic Computing</span>
+          <span class="tag">Composite Recall</span>
+          <span class="tag">Spiking Networks</span>
+          <span class="tag">Neuromorphic (Loihi)</span>
           <span class="tag">RL & Working Memory</span>
           <span class="tag">Rehab Robotics</span>
         </div>
@@ -650,7 +703,7 @@
             <li>Memory systems & consolidation mechanisms</li>
             <li>Astrocyte modulation in neural networks</li>
             <li>Recurrent & spiking neural dynamics</li>
-            <li>Neuromorphic Systems Development</li>
+            <li>Neuromorphic hardware deployment</li>
             <li>Motor control & learning algorithms</li>
             <li>Neural decoding & brain-computer interfaces</li>
           </ul>
@@ -665,10 +718,13 @@
       </div>
       <div class="grid grid-2">
         <article class="card">
+          <div class="research-image-container">
+            <img src="astrocyte_research.png" alt="Neuron-Astrocyte Network Architecture" class="research-image">
+          </div>
           <h3>Neuron–Astrocyte Associative Memory</h3>
           <p>
-            Developing astrocyte‑inspired modulation mechanisms that stabilize co‑active patterns and enable 
-            faster recall. This approach significantly reduces interference and boosts recall 
+            Developing astrocyte‑inspired gating mechanisms that stabilize co‑active patterns and enable 
+            compositional recall. This approach significantly reduces false recalls and boosts composite 
             top‑1 accuracy on CIFAR‑10 and ImageNet subsets.
           </p>
           <ul>
@@ -681,17 +737,20 @@
         <article class="card">
           <h3>Memory Synthesis & Few‑Shot Bridging</h3>
           <p>
-            Investigating how to compose novel "child" memories from parent patterns, enabling 
+            Investigating how to compose novel "child" memories from primitive parent patterns, enabling 
             zero‑shot recognition of unseen composites and rapid 1–5‑shot adaptation to new concepts.
           </p>
           <ul>
             <li>Pretrain on synthetic composite patterns, then adapt with sparse real exemplars</li>
             <li>Systematic identification of failure modes with targeted mitigations</li>
-            <li>Optimization of astrocyte modulation parameters</li>
+            <li>Optimization of astrocyte gating and temporal bin‑width parameters</li>
           </ul>
         </article>
 
         <article class="card">
+          <div class="research-image-container">
+            <img src="rehab_controller.png" alt="Closed-Loop Rehabilitation Controller System" class="research-image">
+          </div>
           <h3>Closed‑Loop Rehabilitation Controller</h3>
           <p>
             Building continuous‑attractor spiking neural network state maps combined with assistance‑as‑needed 
@@ -705,7 +764,6 @@
         </article>
       </div>
     </section>
-
 
     <section id="publications">
       <div class="section-header">
@@ -743,6 +801,18 @@
       </div>
       <div class="grid grid-3">
         <div class="card">
+          <div class="project-media-container">
+            <img src="oculomotor_research.png" alt="Spiking Oculomotor Controller Architecture" class="project-image">
+            <div class="video-container">
+              <iframe 
+                src="https://www.youtube.com/embed/_d0Rdo6ptlw" 
+                title="Spiking Oculomotor Controller Demo" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
           <h3>Spiking Oculomotor Controller</h3>
           <p>
             Implemented a spiking neural network controller in Python/ROS achieving ~15% faster response times 
