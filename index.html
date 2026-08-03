@@ -3,12 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atin Srivastava — Research Scientist | atin17.github.io</title>
-  <meta name="description" content="Atin Srivastava — PhD student at Rutgers University. Researching neuron–astrocyte associative memory, neuromorphic computing (Loihi), spiking/RL agents, and closed‑loop motor control." />
-  <meta property="og:title" content="Atin Srivastava — Research Profile" />
-  <meta property="og:description" content="Neuron–astrocyte memory, composite recall, SNN/RL, rehab robotics." />
+  <title>Atin Srivastava — PhD Researcher in NeuroAI</title>
+  <meta name="description" content="Atin Srivastava is a Rutgers PhD researcher in NeuroAI developing neuron–astrocyte memory, spiking and reinforcement-learning systems, and closed-loop rehabilitation control. Seeking Summer 2027 research and AI/ML internships." />
+  <link rel="canonical" href="https://atin17.github.io/" />
+  <meta property="og:title" content="Atin Srivastava — PhD Researcher in NeuroAI" />
+  <meta property="og:description" content="Neuron–astrocyte memory, spiking and reinforcement-learning systems, and closed-loop rehabilitation control. Seeking Summer 2027 research and AI/ML internships." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atin17.github.io/" />
+  <meta property="og:image" content="https://atin17.github.io/photo.jpg" />
+  <meta property="og:image:alt" content="Atin Srivastava, PhD researcher in NeuroAI" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' x='0.1em' font-size='90'%3E%F0%9F%92%AB%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,6 +83,12 @@
 
     a:hover {
       color: var(--brand);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
     }
 
     .container {
@@ -491,6 +501,29 @@
       margin-bottom: 12px;
     }
 
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid var(--border-hover);
+      border-radius: 8px;
+      color: var(--brand-light);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .project-links a:hover {
+      background: rgba(96, 165, 250, 0.1);
+      border-color: var(--brand);
+    }
+
     /* Info Box */
     .info-box {
       background: rgba(96, 165, 250, 0.05);
@@ -615,6 +648,9 @@
       transition: all 0.3s ease;
       z-index: 99;
       box-shadow: var(--shadow-md);
+      border: 0;
+      color: white;
+      font: inherit;
     }
 
     .scroll-top.visible {
@@ -625,13 +661,55 @@
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
     }
+
+    @media (max-width: 700px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        justify-content: flex-start;
+      }
+
+      .nav-links a {
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
-<body>
+<body id="top">
   <header id="header">
     <div class="container">
-      <nav>
-        <div class="logo">atin17.github.io</div>
+      <nav aria-label="Primary navigation">
+        <a class="logo" href="#top">atin17.github.io</a>
         <div class="nav-links">
           <a href="#about">About</a>
           <a href="#research">Research</a>
@@ -650,20 +728,18 @@
       </div>
       <div>
         <div class="availability-badge">
-          Available for Summer 2026 Research Internships
+          Seeking Summer 2027 Research &amp; AI/ML Internships
         </div>
         <h1>Atin Srivastava</h1>
         <p class="subtitle">
-          Ph.D. student in Computer Science at <strong>Rutgers University</strong> (Computational Brain Lab). 
-          I build <strong>neuron–astrocyte associative memory</strong> models, <strong>spiking/RL agents</strong>, 
-          and <strong>closed‑loop motor control</strong> systems. My long‑term goal: brain‑inspired AI that can 
-          <em>compose memories</em> and generalize intelligently.
+          Ph.D. researcher in Computer Science at <strong>Rutgers University</strong> (Computational Brain Lab).
+          I build <strong>neuron–astrocyte associative memory</strong> models, <strong>spiking and reinforcement-learning systems</strong>,
+          and <strong>closed‑loop motor-control</strong> systems. I am seeking Summer 2027 roles in NeuroAI, machine learning research, and neurotechnology.
         </p>
         <div class="cta-buttons">
-          <a href="#contact" class="btn btn-primary">Get in Touch</a>
+          <a href="#research" class="btn btn-primary">View Research</a>
           <a href="./Atin_Srivastava_CV.pdf" class="btn btn-secondary">Download CV</a>
-          <a href="https://github.com/atin17" target="_blank" class="btn btn-secondary">GitHub</a>
-          <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" class="btn btn-secondary">LinkedIn</a>
+          <a href="https://github.com/atin17" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
         </div>
       </div>
       <div class="focus-card">
@@ -688,7 +764,7 @@
           <h3>Academic Background</h3>
           <p>
             Currently pursuing a <strong>Ph.D. in Computer Science</strong> at Rutgers University with a perfect 4.0 GPA. 
-            My research is supervised by Prof. <a href="http://combra.cs.rutgers.edu/" target="_blank">Konstantinos Michmizos</a> 
+            My research is supervised by Prof. <a href="http://combra.cs.rutgers.edu/" target="_blank" rel="noopener noreferrer">Konstantinos Michmizos</a>
             at the Computational Brain Lab.
           </p>
           <div class="info-box">
@@ -717,52 +793,55 @@
     <section id="research">
       <div class="section-header">
         <h2 class="section-title">Active Research</h2>
-        <p class="section-subtitle">Current projects pushing the boundaries of brain-inspired computing</p>
+        <p class="section-subtitle">Active research with explicit evaluation scope and reproducible implementation priorities</p>
       </div>
-      <div class="grid grid-2">
+      <div class="grid grid-3">
         <article class="card">
           <div class="research-image-container">
-            <img src="astrocyte_research.png" alt="Neuron-Astrocyte Network Architecture" class="research-image">
+            <img src="astrocyte_research.png" alt="Neuron-Astrocyte Network Architecture" class="research-image" loading="lazy">
           </div>
           <h3>Neuron–Astrocyte Associative Memory</h3>
           <p>
-            Developing astrocyte‑inspired modulation mechanisms that stabilize co‑active patterns and enable 
-            compositional recall. This approach significantly reduces false recalls and boosts composite 
-            top‑1 accuracy on CIFAR‑10 and ImageNet subsets.
+            Developing astrocyte-inspired modulation mechanisms for context-tagged recall and compositional retrieval.
+            Current evaluation is restricted to held-out recall protocols and ablation controls that prevent target leakage;
+            benchmark claims will be reported only with their exact task, comparator, and evaluation protocol.
           </p>
           <ul>
-            <li>Comprehensive evaluation suite with ablation studies (no‑astro, no‑time, shuffled controls)</li>
-            <li>Full PyTorch implementation with configurable hyperparameter sweeps</li>
-            <li>Loihi‑ready architecture with neuromorphic deployment hooks</li>
+            <li>PyTorch experiments with configurable hyperparameter sweeps and held-out recall protocols</li>
+            <li>Ablation controls for context structure, timing, and shuffled conditions</li>
+            <li>Neuromorphic deployment design is an active engineering direction, not a completed hardware result</li>
           </ul>
+          <div class="project-links">
+            <a href="https://github.com/Atin17/naam_rl" target="_blank" rel="noopener noreferrer">Public implementation base</a>
+          </div>
         </article>
 
         <article class="card">
           <h3>Memory Synthesis & Few‑Shot Bridging</h3>
           <p>
-            Investigating how to compose novel "child" memories from parent patterns, enabling 
-            zero‑shot recognition of unseen composites and rapid 1–5‑shot adaptation to new concepts.
+            Investigating how to compose novel memories from stored components rather than storing every composite.
+            The central question is whether compositional retrieval remains reliable under held-out primitive and composite tests.
           </p>
           <ul>
-            <li>Pretrain on synthetic composite patterns, then adapt with sparse real exemplars</li>
-            <li>Systematic identification of failure modes with targeted mitigations</li>
-            <li>Optimization of astrocyte modulation and temporal contiguity parameters</li>
+            <li>Pretraining and adaptation protocols for sparse exemplars</li>
+            <li>Seed-matched controls that distinguish composition from direct storage</li>
+            <li>Failure-mode analysis for relation selection, context gating, and temporal contiguity</li>
           </ul>
         </article>
 
         <article class="card">
           <div class="research-image-container">
-            <img src="rehab_controller.png" alt="Closed-Loop Rehabilitation Controller System" class="research-image">
+            <img src="rehab_controller.png" alt="Closed-Loop Rehabilitation Controller System" class="research-image" loading="lazy">
           </div>
           <h3>Closed‑Loop Rehabilitation Controller</h3>
           <p>
-            Building continuous‑attractor spiking neural network state maps combined with assistance‑as‑needed 
-            control for the InMotion Bionik robotic arm. Assistance scales proportionally to (1−confidence).
+            Building continuous-attractor spiking state maps with assistance-as-needed control for the InMotion Bionik robotic arm.
+            Assistance is designed to scale inversely with controller confidence while preserving patient engagement.
           </p>
           <ul>
-            <li>Real-time metrics: completion time, path deviation, assistance work</li>
-            <li>Basin volume analysis for controller stability assessment</li>
-            <li>Adaptive support that promotes patient engagement and recovery</li>
+            <li>Evaluation targets: completion time, path deviation, and assistance work</li>
+            <li>Basin-volume analysis for controller-stability assessment</li>
+            <li>Adaptive support intended to promote patient engagement and recovery</li>
           </ul>
         </article>
       </div>
@@ -781,7 +860,7 @@
             Developed a biologically-inspired spiking neural network for real-time face detection and tracking, 
             demonstrating the potential of neuromorphic approaches for robotic vision systems.
           </p>
-          <a href="https://www.proquest.com/openview/a95a3ad649b612eaa28156167d50d2ba/1?pq-origsite=gscholar&cbl=18750&diss=y" target="_blank">
+          <a href="https://www.proquest.com/openview/a95a3ad649b612eaa28156167d50d2ba/1?pq-origsite=gscholar&cbl=18750&diss=y" target="_blank" rel="noopener noreferrer">
             View on ProQuest →
           </a>
         </div>
@@ -805,12 +884,14 @@
       <div class="grid grid-2">
         <div class="card">
           <div class="project-media-container">
-            <img src="oculomotor_research.png" alt="Spiking Oculomotor Controller Architecture" class="project-image">
+            <img src="oculomotor_research.png" alt="Spiking Oculomotor Controller Architecture" class="project-image" loading="lazy">
             <div class="video-container">
               <iframe 
                 src="https://www.youtube.com/embed/_d0Rdo6ptlw" 
                 title="Spiking Oculomotor Controller Demo" 
                 frameborder="0" 
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
               </iframe>
@@ -818,29 +899,38 @@
           </div>
           <h3>Spiking Oculomotor Controller</h3>
           <p>
-            Implemented a spiking neural network controller in Python/ROS achieving ~15% faster response times 
-            and ~18% higher accuracy compared to baseline approaches. Successfully demonstrated at museum exhibitions.
+            Implemented a spiking neural-network controller in Python/ROS for a biomimetic robotic head.
+            The public code covers step, chirp, and circular experiments with trajectory and positional-error analysis.
           </p>
+          <div class="project-links">
+            <a href="https://github.com/Atin17/Spiking-NN-Oculomotor-Head" target="_blank" rel="noopener noreferrer">Source code</a>
+            <a href="https://www.youtube.com/watch?v=_d0Rdo6ptlw" target="_blank" rel="noopener noreferrer">Lab demonstration</a>
+          </div>
         </div>
 
         <div class="card">
           <div class="research-image-container">
-            <img src="neural_decoding.png" alt="NeuroAI Lab Platform" class="research-image">
+            <img src="neural_decoding.png" alt="NeuroAI Lab Platform" class="research-image" loading="lazy">
           </div>
           <h3>Neural Decoding Pipeline</h3>
           <p>
-            End-to-end platform for processing and decoding neural signals, with applications in 
-            brain-computer interfaces and motor intention prediction. Features data ingestion, exploration, 
-            visualization, model training, and experiment tracking.
+            Built a full-stack prototype for neural-timeseries ingestion, quality control, exploration, visualization,
+            model training, and experiment tracking. The repository includes reproducible local and Docker-based setup paths.
           </p>
+          <div class="project-links">
+            <a href="https://github.com/Atin17/neuroai-lab-platform" target="_blank" rel="noopener noreferrer">Source code</a>
+          </div>
         </div>
 
         <div class="card">
           <h3>RL with Working & Episodic Memory</h3>
           <p>
-            Replicated DeepMind's Fortunato et al. architecture combining key‑value memory, CPC loss, and 
-            stop‑gradient techniques, achieving ~40% improvement in task generalization performance.
+            Reimplemented a reinforcement-learning architecture with working and episodic key-value memory,
+            contrastive predictive coding, and stop-gradient components to study memory-supported generalization.
           </p>
+          <div class="project-links">
+            <a href="https://github.com/Atin17/Generalization-of-Reinforcement-Learners" target="_blank" rel="noopener noreferrer">Source code</a>
+          </div>
         </div>
       </div>
     </section>
@@ -849,26 +939,26 @@
       <div class="contact-card">
         <h2>Let's Connect</h2>
         <p class="subtitle">
-          I'm always interested in discussing research collaborations, internship opportunities, 
-          or innovative projects in computational neuroscience and AI.
+          I am actively seeking a Summer 2027 research, AI/ML, or neurotechnology internship.
+          I welcome conversations about research collaborations and technically rigorous work in computational neuroscience and AI.
         </p>
         <div class="contact-methods">
           <a href="mailto:atin.srivastava75@gmail.com" class="contact-method">
             <span>📧</span>
             <span>atin.srivastava75@gmail.com</span>
           </a>
-          <a href="https://github.com/atin17" target="_blank" class="contact-method">
+          <a href="https://github.com/atin17" target="_blank" rel="noopener noreferrer" class="contact-method">
             <span>💻</span>
             <span>@atin17</span>
           </a>
-          <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" class="contact-method">
+          <a href="https://www.linkedin.com/in/atin-srivastava" target="_blank" rel="noopener noreferrer" class="contact-method">
             <span>💼</span>
             <span>/in/atin-srivastava</span>
           </a>
         </div>
         <div class="info-box" style="margin-top: 32px; display: inline-block; text-align: left;">
           <p><strong>Location:</strong> New Brunswick, NJ</p>
-          <p><strong>Availability:</strong> Summer 2026 (May–August)</p>
+          <p><strong>Availability:</strong> Summer 2027 (May–August)</p>
         </div>
       </div>
     </section>
@@ -883,9 +973,9 @@
     </div>
   </footer>
 
-  <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+  <button class="scroll-top" id="scrollTop" type="button" aria-label="Back to top">
     ↑
-  </div>
+  </button>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -893,6 +983,10 @@
     // Header scroll effect
     const header = document.getElementById('header');
     const scrollTop = document.getElementById('scrollTop');
+
+    scrollTop.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
@@ -923,3 +1017,4 @@
   </script>
 </body>
 </html>
+
