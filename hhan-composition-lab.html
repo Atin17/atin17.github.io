@@ -321,7 +321,7 @@
       <p class="eyebrow">HHAN MNIST union recall lab</p>
       <h1>Can associative memory recover a union of handwritten digits it never stored?</h1>
       <p class="lede">
-        Select two MNIST digit classes, choose a seed, and create a noisy union. Each seed selects an independent real handwritten exemplar for P₁ and P₂; the decoder receives only the corrupted union and ranks transient, on-demand hypotheses.
+        Select two MNIST digit classes, choose a seed, and create a noisy union. Each seed selects independent handwritten exemplars and a low-dimensional spatial relation cue q; q specifies only relative placement, never the digit labels. The decoder ranks transient, on-demand hypotheses from the corrupted union under an aligned, absent, or shuffled q.
       </p>
       <div class="chips" aria-label="Experiment properties">
         <span class="chip">Real MNIST test exemplars</span>
@@ -382,15 +382,15 @@
             <div class="mode-group">
               <label class="mode">
                 <input type="radio" name="mode" value="aligned" checked>
-                <span><strong>Aligned compact trace</strong><span>Each candidate uses its own low-dimensional support-geometry trace.</span></span>
+                <span><strong>Aligned spatial relation cue</strong><span>Every candidate is placed using the seed-derived context q.</span></span>
               </label>
               <label class="mode">
                 <input type="radio" name="mode" value="none">
-                <span><strong>No contextual trace</strong><span>Candidate pairs are ranked only from the corrupted pixel support.</span></span>
+                <span><strong>No spatial context</strong><span>Candidates remain in canonical coordinates and are ranked from the corrupted union alone.</span></span>
               </label>
               <label class="mode">
                 <input type="radio" name="mode" value="shuffled">
-                <span><strong>Shuffled compact trace</strong><span>Trace capacity is preserved but candidate-to-trace alignment is disrupted.</span></span>
+                <span><strong>Shuffled spatial relation cue</strong><span>Context capacity is preserved, but an incorrect seed-derived q is applied.</span></span>
               </label>
             </div>
           </div>
@@ -453,7 +453,7 @@
           <article class="step">
             <div class="step-num">03</div>
             <h3>Ablate compact context</h3>
-            <p>Aligned and shuffled modes have equal trace dimensionality. Shuffling disrupts the candidate-to-trace mapping rather than adding or removing information.</p>
+            <p>Aligned and shuffled modes use the same two-dimensional translation capacity. Shuffling changes only the relation-to-layout mapping; q contains no digit-class identity.</p>
           </article>
         </div>
       </div>
@@ -585,24 +585,45 @@
       return (1.20 * hits - 1.40 * missedObserved - .08 * unsupported) / Math.max(1, candidateCount);
     }
 
-    function compactTrace(pattern) {
-      const buckets = [0, 0, 0, 0, 0];
-      let total = 0;
-      pattern.forEach((value, index) => {
-        if (!value) return;
-        const x = index % SIDE;
-        const y = Math.floor(index / SIDE);
-        const quadrant = (y >= SIDE / 2 ? 2 : 0) + (x >= SIDE / 2 ? 1 : 0);
-        buckets[quadrant] += 1;
-        if (x >= 9 && x <= 18 && y >= 9 && y <= 18) buckets[4] += 1;
-        total += 1;
-      });
-      return buckets.map((count) => count / Math.max(1, total));
+    const layouts = [
+      { p1: { x: -3, y: -2 }, p2: { x: 3, y: 2 } },
+      { p1: { x: -2, y: 3 }, p2: { x: 2, y: -3 } },
+      { p1: { x: -3, y: 0 }, p2: { x: 3, y: 0 } },
+      { p1: { x: 0, y: -3 }, p2: { x: 0, y: 3 } },
+      { p1: { x: -3, y: 2 }, p2: { x: 3, y: -2 } },
+      { p1: { x: -2, y: -3 }, p2: { x: 2, y: 3 } }
+    ];
+
+    function shift(pattern, dx, dy) {
+      const output = Array(CELLS).fill(0);
+      for (let y = 0; y < SIDE; y += 1) {
+        for (let x = 0; x < SIDE; x += 1) {
+          const targetX = x + dx;
+          const targetY = y + dy;
+          if (pattern[y * SIDE + x] && targetX >= 0 && targetX < SIDE && targetY >= 0 && targetY < SIDE) {
+            output[targetY * SIDE + targetX] = 1;
+          }
+        }
+      }
+      return output;
     }
 
-    function traceFit(reference, observed) {
-      const totalDifference = reference.reduce((sum, value, index) => sum + Math.abs(value - observed[index]), 0);
-      return 1 - totalDifference / reference.length;
+    function layoutFor(seed) {
+      return layouts[seed % layouts.length];
+    }
+
+    function zeroLayout() {
+      return { p1: { x: 0, y: 0 }, p2: { x: 0, y: 0 } };
+    }
+
+    function layoutForMode(mode, seed) {
+      if (mode === "aligned") return layoutFor(seed);
+      if (mode === "shuffled") return layoutFor(seed + 1);
+      return zeroLayout();
+    }
+
+    function layoutCode(layout) {
+      return "q = [P1 (" + layout.p1.x + "," + layout.p1.y + "), P2 (" + layout.p2.x + "," + layout.p2.y + ")]";
     }
 
     function f1(predicted, target) {
@@ -649,20 +670,14 @@
       return document.querySelector('input[name="mode"]:checked').value;
     }
 
-    function candidateFor(firstLabel, secondLabel, seed, observedTrace, mode) {
+    function candidateFor(firstLabel, secondLabel, seed, layout) {
       const first = exemplar(firstLabel, 1, seed);
       const second = exemplar(secondLabel, 2, seed);
-      const pattern = union([first.pattern, second.pattern]);
-      const alignedTrace = compactTrace(pattern);
-      const shuffledFirst = exemplar((firstLabel + 3) % 10, 1, seed);
-      const shuffledSecond = exemplar((secondLabel + 7) % 10, 2, seed);
-      const shuffledTrace = compactTrace(union([shuffledFirst.pattern, shuffledSecond.pattern]));
-      const relation = mode === "aligned"
-        ? traceFit(alignedTrace, observedTrace)
-        : mode === "shuffled"
-          ? traceFit(shuffledTrace, observedTrace)
-          : 0;
-      return { firstLabel, secondLabel, first, second, pattern, relation };
+      const pattern = union([
+        shift(first.pattern, layout.p1.x, layout.p1.y),
+        shift(second.pattern, layout.p2.x, layout.p2.y)
+      ]);
+      return { firstLabel, secondLabel, first, second, pattern, layout };
     }
 
     function getTrial() {
@@ -673,20 +688,38 @@
       const mode = selectedMode();
       const first = exemplar(firstLabel, 1, seed);
       const second = exemplar(secondLabel, 2, seed);
-      const target = union([first.pattern, second.pattern]);
+      const trueLayout = layoutFor(seed);
+      const target = union([
+        shift(first.pattern, trueLayout.p1.x, trueLayout.p1.y),
+        shift(second.pattern, trueLayout.p2.x, trueLayout.p2.y)
+      ]);
       const observed = corrupt(target, noise, mulberry32(seed * 7919 + firstLabel * 101 + secondLabel * 17));
-      const observedTrace = compactTrace(observed);
+      const candidateLayout = layoutForMode(mode, seed);
       const candidates = [];
       DIGITS.forEach((candidateFirst) => {
         DIGITS.forEach((candidateSecond) => {
-          const candidate = candidateFor(candidateFirst, candidateSecond, seed, observedTrace, mode);
+          const candidate = candidateFor(candidateFirst, candidateSecond, seed, candidateLayout);
           candidate.cue = cueFit(candidate.pattern, observed);
-          candidate.score = mode === "none" ? candidate.cue : .76 * candidate.cue + .24 * candidate.relation;
+          candidate.score = candidate.cue;
           candidates.push(candidate);
         });
       });
       candidates.sort((left, right) => right.score - left.score);
-      return { firstLabel, secondLabel, first, second, target, observed, mode, noise, seed, winner: candidates[0], candidates };
+      return {
+        firstLabel,
+        secondLabel,
+        first,
+        second,
+        target,
+        observed,
+        mode,
+        noise,
+        seed,
+        trueLayout,
+        candidateLayout,
+        winner: candidates[0],
+        candidates
+      };
     }
 
     function candidateName(candidate) {
@@ -697,8 +730,13 @@
       const exact = trial.winner.firstLabel === trial.firstLabel && trial.winner.secondLabel === trial.secondLabel;
       const reconstructionF1 = f1(trial.winner.pattern, trial.target);
       const coverage = supportCoverage(trial.observed, trial.target);
-      const steps = Math.max(2, Math.min(9, Math.round(2 + (1 - coverage) * 6 + (exact ? 0 : 1))));
-      const relationLabel = trial.mode === "aligned" ? "aligned" : trial.mode === "shuffled" ? "shuffled" : "absent";
+      const layoutMismatch = 1 - reconstructionF1;
+      const steps = Math.max(2, Math.min(10, Math.round(2 + (1 - coverage) * 5 + layoutMismatch * 3 + (exact ? 0 : 1))));
+      const contextLabel = trial.mode === "aligned"
+        ? "aligned"
+        : trial.mode === "shuffled"
+          ? "shuffled"
+          : "absent";
 
       drawPattern(contexts.p1, trial.first.pattern, "p1");
       drawPattern(contexts.p2, trial.second.pattern, "p2");
@@ -713,15 +751,16 @@
       document.getElementById("iterations").textContent = steps;
       document.getElementById("candidate").innerHTML =
         "<strong>Top hypothesis: " + candidateName(trial.winner) + "</strong><br>" +
-        "Candidate score = " + trial.winner.score.toFixed(3) + " (cue " + trial.winner.cue.toFixed(3) +
-        "; " + relationLabel + " trace fit " + trial.winner.relation.toFixed(3) + ").";
+        "Candidate score = " + trial.winner.score.toFixed(3) + ". Context is " + contextLabel + ": " +
+        layoutCode(trial.candidateLayout) + ".";
       document.getElementById("trace").innerHTML =
-        "Source pair retained only for evaluation: P1=" + trial.firstLabel + ", P2=" + trial.secondLabel + "<br>" +
-        "Seed " + trial.seed + " selected actual test exemplars " + (trial.first.sampleIndex + 1) + "/24 and " +
-        (trial.second.sampleIndex + 1) + "/24. Top-3: " + trial.candidates.slice(0, 3).map(candidateName).join(" / ");
+        "Source labels retained only for evaluation: P1=" + trial.firstLabel + ", P2=" + trial.secondLabel + "<br>" +
+        "True spatial relation: " + layoutCode(trial.trueLayout) + " &nbsp;•&nbsp; Applied: " +
+        layoutCode(trial.candidateLayout) + "<br>" +
+        "Top-3: " + trial.candidates.slice(0, 3).map(candidateName).join(" / ");
       document.getElementById("readout").textContent = exact
-        ? "The selected digit pair was recovered from the corrupted union. The displayed union was constructed transiently from the two candidate primitive maps."
-        : "A competing digit pair won under the selected corruption and context condition. Try a new seed, digit pair, or ablation to inspect the failure mode.";
+        ? "The selected digit pair was recovered from the corrupted union. Aligned q applies the correct relation-specific layout without encoding either digit label."
+        : "A competing digit pair won under the selected corruption and contextual condition. Compare the applied q with the true spatial relation to inspect the failure mode.";
       document.getElementById("status").textContent = exact ? "Retrieval complete" : "Retrieval mismatch";
     }
 
