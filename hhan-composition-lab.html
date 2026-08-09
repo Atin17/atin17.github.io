@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HHAN Compositional Recall Lab — Atin Srivastava</title>
-  <meta name="description" content="An interactive, fixed-seed toy experiment illustrating compositional associative recall with HHAN-inspired contextual structure.">
+  <title>HHAN MNIST Union Recall Lab — Atin Srivastava</title>
+  <meta name="description" content="An interactive, fixed-seed MNIST union-recall experiment illustrating compositional associative retrieval with HHAN-inspired contextual structure.">
   <meta name="theme-color" content="#08111f">
   <style>
     :root {
@@ -18,7 +18,6 @@
       --cyan: #22d3ee;
       --green: #5eead4;
       --amber: #fbbf24;
-      --red: #fb7185;
       --purple: #c4b5fd;
       --shadow: 0 20px 55px rgba(0, 0, 0, .28);
     }
@@ -44,20 +43,15 @@
 
     .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
     .topbar {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
+      display: flex;
       gap: 16px;
+      justify-content: space-between;
       padding: 22px 0;
       font-size: .9rem;
     }
 
-    .back {
-      color: var(--text);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
+    .back { color: var(--text); font-weight: 700; text-decoration: none; }
     .back:hover { color: var(--cyan); }
     .eyebrow {
       color: var(--green);
@@ -70,71 +64,71 @@
 
     header { padding: 58px 0 42px; }
     h1 {
-      max-width: 870px;
+      max-width: 940px;
       margin: 10px 0 20px;
-      font-size: clamp(2.4rem, 7vw, 5.2rem);
-      line-height: .98;
+      font-size: clamp(2.35rem, 6.5vw, 5rem);
       letter-spacing: -.06em;
+      line-height: .98;
     }
 
     .lede {
-      max-width: 770px;
       color: var(--muted);
       font-size: clamp(1.04rem, 2.1vw, 1.25rem);
+      max-width: 790px;
     }
 
     .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 25px; }
     .chip {
+      background: rgba(16, 28, 46, .68);
       border: 1px solid var(--border);
       border-radius: 999px;
       color: var(--muted);
       font-size: .82rem;
       font-weight: 700;
       padding: 7px 11px;
-      background: rgba(16, 28, 46, .68);
     }
 
     .notice {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 13px;
-      padding: 17px 18px;
+      background: rgba(251, 191, 36, .08);
       border: 1px solid rgba(251, 191, 36, .42);
       border-radius: 13px;
-      background: rgba(251, 191, 36, .08);
       color: #ffe6a2;
-      margin: 10px 0 42px;
+      display: grid;
       font-size: .94rem;
+      gap: 13px;
+      grid-template-columns: auto 1fr;
+      margin: 10px 0 42px;
+      padding: 17px 18px;
     }
 
     .notice strong { color: #fff4cc; }
     .panel {
+      background: linear-gradient(145deg, rgba(20, 36, 59, .96), rgba(10, 19, 33, .96));
       border: 1px solid var(--border);
       border-radius: 20px;
-      background: linear-gradient(145deg, rgba(20, 36, 59, .96), rgba(10, 19, 33, .96));
       box-shadow: var(--shadow);
     }
 
     .lab { padding: 24px; }
     .lab-heading {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
       align-items: end;
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
       margin-bottom: 23px;
     }
 
-    h2 { margin: 0; font-size: 1.42rem; letter-spacing: -.025em; }
-    .lab-heading p, .subtle { margin: 5px 0 0; color: var(--muted); font-size: .9rem; }
+    h2 { font-size: 1.42rem; letter-spacing: -.025em; margin: 0; }
+    .lab-heading p, .subtle { color: var(--muted); font-size: .9rem; margin: 5px 0 0; }
     .layout {
       display: grid;
-      grid-template-columns: minmax(245px, .84fr) minmax(330px, 1.28fr) minmax(245px, .84fr);
       gap: 18px;
+      grid-template-columns: minmax(245px, .84fr) minmax(360px, 1.34fr) minmax(245px, .84fr);
     }
 
     .control-pane, .result-pane, .canvas-pane {
-      border: 1px solid rgba(167, 190, 212, .18);
       background: rgba(4, 12, 23, .42);
+      border: 1px solid rgba(167, 190, 212, .18);
       border-radius: 14px;
       padding: 19px;
     }
@@ -154,71 +148,71 @@
     label { color: var(--text); display: block; font-size: .91rem; font-weight: 700; margin-bottom: 7px; }
     input[type="range"] { accent-color: var(--cyan); width: 100%; }
     select, input[type="number"] {
-      width: 100%;
-      padding: 10px 11px;
+      background: #091627;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: #091627;
       color: var(--text);
       font: inherit;
+      padding: 10px 11px;
+      width: 100%;
     }
 
+    .digit-selects { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
     .inline-value { color: var(--green); float: right; font-family: ui-monospace, monospace; }
     .mode-group { display: grid; gap: 8px; }
     .mode {
-      cursor: pointer;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 9px;
       align-items: start;
-      padding: 10px;
       border: 1px solid transparent;
       border-radius: 10px;
+      cursor: pointer;
+      display: grid;
+      gap: 9px;
+      grid-template-columns: auto 1fr;
+      padding: 10px;
     }
 
     .mode:has(input:checked) {
-      border-color: rgba(34, 211, 238, .6);
       background: rgba(34, 211, 238, .08);
+      border-color: rgba(34, 211, 238, .6);
     }
 
     .mode input { accent-color: var(--cyan); margin: 4px 0 0; }
     .mode strong { display: block; font-size: .88rem; }
     .mode span { color: var(--muted); display: block; font-size: .77rem; margin-top: 2px; }
     .run {
-      width: 100%;
-      cursor: pointer;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
       border: 0;
       border-radius: 10px;
-      padding: 13px 15px;
-      margin-top: 5px;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
       color: #031423;
+      cursor: pointer;
       font: inherit;
       font-weight: 900;
+      margin-top: 5px;
+      padding: 13px 15px;
       transition: transform .2s ease, filter .2s ease;
+      width: 100%;
     }
 
     .run:hover { filter: brightness(1.08); transform: translateY(-1px); }
     .run:disabled { cursor: wait; filter: grayscale(.15); opacity: .7; }
     .run-note { color: var(--muted); font-size: .76rem; margin: 10px 0 0; text-align: center; }
 
-    .canvas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .canvas-grid { display: grid; gap: 13px; grid-template-columns: 1fr 1fr; }
     figure { margin: 0; }
     figcaption { color: var(--muted); font-size: .78rem; font-weight: 700; margin: 0 0 7px; }
     canvas {
-      display: block;
-      width: 100%;
-      aspect-ratio: 1;
+      background: #05111e;
       border: 1px solid var(--border);
       border-radius: 9px;
-      background: #05111e;
+      display: block;
       image-rendering: pixelated;
+      width: 100%;
     }
 
     .trace {
       color: var(--muted);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: .75rem;
+      font-size: .73rem;
       line-height: 1.6;
       margin: 13px 0 0;
       min-height: 3.2em;
@@ -233,7 +227,7 @@
       text-transform: uppercase;
     }
 
-    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+    .metric-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin: 15px 0; }
     .metric {
       background: rgba(8, 17, 31, .72);
       border: 1px solid rgba(167, 190, 212, .15);
@@ -241,24 +235,19 @@
       padding: 11px;
     }
 
-    .metric b { display: block; color: var(--text); font-size: 1.25rem; line-height: 1.1; }
+    .metric b { color: var(--text); display: block; font-size: 1.25rem; line-height: 1.1; }
     .metric span { color: var(--muted); display: block; font-size: .73rem; margin-top: 5px; }
     .candidate {
-      border-left: 3px solid var(--purple);
       background: rgba(196, 181, 253, .08);
-      padding: 11px;
+      border-left: 3px solid var(--purple);
       color: var(--muted);
       font-size: .82rem;
+      padding: 11px;
     }
 
     .candidate strong { color: var(--text); }
-    .explain {
-      border-top: 1px solid var(--border);
-      margin-top: 27px;
-      padding: 30px 24px 0;
-    }
-
-    .explain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 17px; }
+    .explain { border-top: 1px solid var(--border); margin-top: 27px; padding: 30px 24px 0; }
+    .explain-grid { display: grid; gap: 15px; grid-template-columns: repeat(3, 1fr); margin-top: 17px; }
     .step {
       background: rgba(4, 12, 23, .4);
       border: 1px solid rgba(167, 190, 212, .14);
@@ -285,7 +274,7 @@
     .step h3 { font-size: .95rem; margin: 0 0 7px; }
     .step p { color: var(--muted); font-size: .84rem; margin: 0; }
     .scaling { margin: 31px 0 56px; padding: 24px; }
-    .scaling-grid { display: grid; grid-template-columns: 1.1fr 1.2fr; gap: 26px; align-items: center; }
+    .scaling-grid { align-items: center; display: grid; gap: 26px; grid-template-columns: 1.1fr 1.2fr; }
     .formula {
       border-left: 3px solid var(--green);
       color: var(--muted);
@@ -295,9 +284,8 @@
       padding: 11px 0 11px 15px;
     }
 
-    .storage-row { align-items: end; display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+    .storage-row { align-items: end; display: grid; gap: 12px; grid-template-columns: 1fr auto; }
     .storage-number { color: var(--green); font-family: ui-monospace, monospace; font-size: 1.3rem; font-weight: 900; }
-
     footer { border-top: 1px solid rgba(167, 190, 212, .14); color: var(--muted); font-size: .82rem; padding: 25px 0 36px; }
 
     @media (max-width: 980px) {
@@ -330,29 +318,29 @@
     </nav>
 
     <header>
-      <p class="eyebrow">HHAN compositional recall lab</p>
-      <h1>Can an associative memory recover what it never stored?</h1>
+      <p class="eyebrow">HHAN MNIST union recall lab</p>
+      <h1>Can associative memory recover a union of handwritten digits it never stored?</h1>
       <p class="lede">
-        Probe an inspectable, fixed-seed toy model of compositional recall. A noisy cue is generated from a held-out union of stored primitives; the retrieval process must identify a constituent set and reconstruct its union on demand.
+        Select two MNIST digit classes, choose a seed, and create a noisy union. Each seed selects an independent real handwritten exemplar for \(P_1\) and \(P_2\); the decoder receives only the corrupted union and ranks transient, on-demand hypotheses.
       </p>
       <div class="chips" aria-label="Experiment properties">
-        <span class="chip">Client-side execution</span>
-        <span class="chip">Fixed-seed trials</span>
-        <span class="chip">Held-out composite cues</span>
+        <span class="chip">Real MNIST test exemplars</span>
+        <span class="chip">Seeded instance selection</span>
+        <span class="chip">Held-out unions</span>
         <span class="chip">Mechanism ablations</span>
       </div>
     </header>
 
     <aside class="notice" aria-label="Scope note">
       <span aria-hidden="true">⚠</span>
-      <div><strong>Scope:</strong> this is a didactic, deterministic mechanism demonstration—not a reproduction of HHAN manuscript benchmarks or a claim of production performance. Its purpose is to make the compositional hypothesis, control conditions, and storage distinction inspectable in a browser.</div>
+      <div><strong>Scope:</strong> this is a fixed-seed, didactic browser experiment using real MNIST inputs—not a reproduction of the submitted HHAN manuscript benchmark. It exposes a toy retrieval mechanism and controls, and makes no production or paper-performance claim.</div>
     </aside>
 
     <section class="panel lab" aria-labelledby="lab-title">
       <div class="lab-heading">
         <div>
-          <h2 id="lab-title">Run a compositional retrieval trial</h2>
-          <p>The target composite is never placed in the stored pattern bank.</p>
+          <h2 id="lab-title">Run an MNIST union-retrieval trial</h2>
+          <p>The selected \(P_1 \cup P_2\) union is evaluated as a query-time composition, not stored as a template.</p>
         </div>
         <span class="status" id="status" aria-live="polite">Ready</span>
       </div>
@@ -362,11 +350,21 @@
           <span class="pane-label">Experiment controls</span>
 
           <div class="field">
-            <label for="order">Held-out composition order</label>
-            <select id="order" name="order">
-              <option value="2">Two primitives</option>
-              <option value="3">Three primitives</option>
-            </select>
+            <label>Primitive digit classes</label>
+            <div class="digit-selects">
+              <div>
+                <label for="p1">\(P_1\)</label>
+                <select id="p1" name="p1" aria-label="First primitive digit">
+                  <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
+                </select>
+              </div>
+              <div>
+                <label for="p2">\(P_2\)</label>
+                <select id="p2" name="p2" aria-label="Second primitive digit">
+                  <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8" selected>8</option><option value="9">9</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           <div class="field">
@@ -375,7 +373,7 @@
           </div>
 
           <div class="field">
-            <label for="seed">Trial seed</label>
+            <label for="seed">Instance-selection seed</label>
             <input id="seed" name="seed" type="number" min="1" max="9999" value="17">
           </div>
 
@@ -384,36 +382,44 @@
             <div class="mode-group">
               <label class="mode">
                 <input type="radio" name="mode" value="aligned" checked>
-                <span><strong>Aligned relation traces</strong><span>On-demand hypotheses use structured scalar relation metadata.</span></span>
+                <span><strong>Aligned compact trace</strong><span>Each candidate uses its own low-dimensional support-geometry trace.</span></span>
               </label>
               <label class="mode">
                 <input type="radio" name="mode" value="none">
-                <span><strong>No contextual trace</strong><span>Candidate sets are ranked from the corrupted cue alone.</span></span>
+                <span><strong>No contextual trace</strong><span>Candidate pairs are ranked only from the corrupted pixel support.</span></span>
               </label>
               <label class="mode">
                 <input type="radio" name="mode" value="shuffled">
-                <span><strong>Shuffled relation traces</strong><span>Same context capacity, but its primitive-to-relation mapping is disrupted.</span></span>
+                <span><strong>Shuffled compact trace</strong><span>Trace capacity is preserved but candidate-to-trace alignment is disrupted.</span></span>
               </label>
             </div>
           </div>
 
           <button class="run" id="run" type="submit">Run retrieval</button>
-          <p class="run-note">All randomness is derived from the displayed seed.</p>
+          <p class="run-note">A seed selects one of 24 embedded MNIST test exemplars per digit and role.</p>
         </form>
 
-        <section class="canvas-pane" aria-label="Input and retrieval patterns">
-          <span class="pane-label">Pattern space</span>
+        <section class="canvas-pane" aria-label="MNIST primitives, noisy union, and retrieved union">
+          <span class="pane-label">MNIST pattern space</span>
           <div class="canvas-grid">
             <figure>
-              <figcaption>Noisy composite cue</figcaption>
-              <canvas id="cue-canvas" width="288" height="288" aria-label="Noisy query pattern"></canvas>
+              <figcaption id="p1-caption">Stored primitive \(P_1\)</figcaption>
+              <canvas id="p1-canvas" width="224" height="224" aria-label="First MNIST primitive"></canvas>
+            </figure>
+            <figure>
+              <figcaption id="p2-caption">Stored primitive \(P_2\)</figcaption>
+              <canvas id="p2-canvas" width="224" height="224" aria-label="Second MNIST primitive"></canvas>
+            </figure>
+            <figure>
+              <figcaption>Noisy union cue</figcaption>
+              <canvas id="cue-canvas" width="224" height="224" aria-label="Noisy query union"></canvas>
             </figure>
             <figure>
               <figcaption>Retrieved on-demand union</figcaption>
-              <canvas id="output-canvas" width="288" height="288" aria-label="Retrieved composite pattern"></canvas>
+              <canvas id="output-canvas" width="224" height="224" aria-label="Retrieved digit union"></canvas>
             </figure>
           </div>
-          <p class="trace" id="trace">Stored primitives: A, B, C, D, E<br>Query source: pending trial.</p>
+          <p class="trace" id="trace">MNIST asset loading…</p>
         </section>
 
         <section class="result-pane" aria-label="Retrieval results">
@@ -422,12 +428,12 @@
             <strong>Awaiting trial.</strong><br>Run the default configuration to inspect the candidate ranking and reconstruction.
           </div>
           <div class="metric-grid">
-            <div class="metric"><b id="exact">—</b><span>Exact constituent set</span></div>
+            <div class="metric"><b id="exact">—</b><span>Exact \(P_1,P_2\) pair</span></div>
             <div class="metric"><b id="f1">—</b><span>Union reconstruction F1</span></div>
             <div class="metric"><b id="cue-coverage">—</b><span>Observed target support</span></div>
             <div class="metric"><b id="iterations">—</b><span>Coordinate settle steps</span></div>
           </div>
-          <p class="subtle" id="readout">The final pattern is a union reconstructed from candidate primitives at query time; it is not retrieved from a stored composite template.</p>
+          <p class="subtle" id="readout">The decoder sees a corrupted union only. The selected digit labels are retained solely for the post-hoc exact-pair metric.</p>
         </section>
       </div>
 
@@ -436,18 +442,18 @@
         <div class="explain-grid">
           <article class="step">
             <div class="step-num">01</div>
-            <h3>Store primitives, not unions</h3>
-            <p>The visual bank contains primitive support maps. Composite candidates are generated transiently only while answering a query.</p>
+            <h3>Choose real MNIST primitives</h3>
+            <p>\(P_1,P_2 \in \{0,\ldots,9\}\) select digit classes. The displayed handwritten instances change with the seed; their union is never added to the stored bank.</p>
           </article>
           <article class="step">
             <div class="step-num">02</div>
-            <h3>Corrupt a held-out cue</h3>
-            <p>Active support is deleted and irrelevant support is injected. The decoder only receives this noisy query, not its component labels.</p>
+            <h3>Corrupt the union cue</h3>
+            <p>Target pixels are deleted and background pixels are injected. Candidate scoring receives the resulting cue but never the selected labels.</p>
           </article>
           <article class="step">
             <div class="step-num">03</div>
-            <h3>Ablate relation structure</h3>
-            <p>Aligned and shuffled traces have equal scalar capacity. Changing their mapping tests whether structure, rather than extra context alone, guides the hypothesis.</p>
+            <h3>Ablate compact context</h3>
+            <p>Aligned and shuffled modes have equal trace dimensionality. Shuffling disrupts the candidate-to-trace mapping rather than adding or removing information.</p>
           </article>
         </div>
       </div>
@@ -457,101 +463,89 @@
       <div class="scaling-grid">
         <div>
           <p class="eyebrow">Storage accounting</p>
-          <h2 id="scaling-title">Why compose at query time?</h2>
-          <p class="subtle">This panel is a scaling illustration, separate from the executable five-primitive toy task above.</p>
+          <h2 id="scaling-title">Why form unions at query time?</h2>
+          <p class="subtle">This panel is a scaling illustration, separate from the executable two-digit MNIST experiment above.</p>
           <p class="formula">
             Explicit pair templates: \( \binom{M}{2} \times N \) cells<br>
             Primitive bank + pair traces: \( M \times N + \binom{M}{2} \) scalars<br>
-            Composite support is generated transiently, not added to the recurrent bank.
+            A composite support is generated transiently, not inserted into the stored primitive bank.
           </p>
         </div>
         <div>
           <div class="storage-row">
-            <label for="memory-count">Number of primitives <span class="inline-value" id="memory-count-value">12</span></label>
-            <span class="storage-number" id="composite-count">66 pairs</span>
+            <label for="memory-count">Number of primitive classes <span class="inline-value" id="memory-count-value">10</span></label>
+            <span class="storage-number" id="composite-count">45 pairs</span>
           </div>
-          <input id="memory-count" type="range" min="3" max="30" value="12" step="1">
+          <input id="memory-count" type="range" min="3" max="30" value="10" step="1">
           <div class="metric-grid">
-            <div class="metric"><b id="explicit-cost">—</b><span>Explicit composite map cells</span></div>
+            <div class="metric"><b id="explicit-cost">—</b><span>Explicit composite-map cells</span></div>
             <div class="metric"><b id="factorized-cost">—</b><span>Primitive-map cells + scalar traces</span></div>
           </div>
-          <p class="subtle">Assumes \(N = 144\) binary support units per primitive map. This count is illustrative, not a full runtime or capacity analysis.</p>
+          <p class="subtle">Uses \(N=784\) binary MNIST support units per primitive map. This is illustrative storage accounting, not a runtime or capacity guarantee.</p>
         </div>
       </div>
     </section>
 
     <footer>
-      HHAN Compositional Recall Lab · <a href="https://github.com/Atin17" target="_blank" rel="noopener noreferrer">GitHub</a> · Static browser experiment
+      HHAN MNIST Union Recall Lab · Real MNIST test exemplars embedded for static browser execution · <a href="https://github.com/Atin17" target="_blank" rel="noopener noreferrer">GitHub</a>
     </footer>
   </main>
 
+  <script src="./mnist-exemplars.js"></script>
   <script>
     "use strict";
 
-    const SIDE = 12;
+    const SIDE = 28;
     const CELLS = SIDE * SIDE;
-    const primitiveNames = ["A", "B", "C", "D", "E"];
-    const targetSets = {
-      2: [[0, 1], [1, 4], [2, 3]],
-      3: [[0, 1, 4], [1, 2, 3], [0, 2, 4]]
-    };
-
-    const relationTrace = {
-      "0-1": .94, "0-2": .22, "0-3": .31, "0-4": .68,
-      "1-2": .39, "1-3": .57, "1-4": .86,
-      "2-3": .92, "2-4": .48, "3-4": .29
-    };
-
-    const shuffledTrace = {
-      "0-1": .25, "0-2": .86, "0-3": .71, "0-4": .43,
-      "1-2": .92, "1-3": .18, "1-4": .34,
-      "2-3": .29, "2-4": .95, "3-4": .63
-    };
-
-    const cueCanvas = document.getElementById("cue-canvas");
-    const outputCanvas = document.getElementById("output-canvas");
-    const cueContext = cueCanvas.getContext("2d");
-    const outputContext = outputCanvas.getContext("2d");
+    const DIGITS = Array.from({ length: 10 }, (_, value) => value);
+    const asset = window.MNIST_EXEMPLARS;
+    const decodedPatterns = new Map();
     const controls = document.getElementById("controls");
     const runButton = document.getElementById("run");
+    const contexts = {
+      p1: document.getElementById("p1-canvas").getContext("2d"),
+      p2: document.getElementById("p2-canvas").getContext("2d"),
+      cue: document.getElementById("cue-canvas").getContext("2d"),
+      output: document.getElementById("output-canvas").getContext("2d")
+    };
 
-    function blankPattern() {
-      return Array(CELLS).fill(0);
+    if (!asset || asset.width !== SIDE) {
+      throw new Error("MNIST exemplar asset was unavailable or malformed.");
     }
 
-    function put(pattern, x, y) {
-      if (x >= 0 && x < SIDE && y >= 0 && y < SIDE) {
-        pattern[y * SIDE + x] = 1;
-      }
-    }
-
-    function line(pattern, x0, y0, x1, y1) {
-      const steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0));
-      for (let i = 0; i <= steps; i += 1) {
-        put(pattern, Math.round(x0 + (x1 - x0) * i / steps), Math.round(y0 + (y1 - y0) * i / steps));
-      }
-    }
-
-    function makePrimitives() {
-      const patterns = primitiveNames.map(blankPattern);
-      for (let x = 1; x <= 5; x += 1) put(patterns[0], x, 2);
-      for (let y = 6; y <= 10; y += 1) put(patterns[1], 3, y);
-      line(patterns[2], 7, 3, 10, 6);
-      for (let x = 8; x <= 10; x += 1) {
-        for (let y = 8; y <= 10; y += 1) put(patterns[3], x, y);
-      }
-      for (let y = 2; y <= 6; y += 1) put(patterns[4], 10, y);
-      return patterns;
-    }
-
-    const primitives = makePrimitives();
-
-    function union(indices) {
-      const out = blankPattern();
-      indices.forEach((index) => {
-        primitives[index].forEach((value, cell) => { out[cell] = Math.max(out[cell], value); });
+    function decodeSample(base64) {
+      if (decodedPatterns.has(base64)) return decodedPatterns.get(base64);
+      const binary = atob(base64);
+      const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+      const pattern = Array.from({ length: CELLS }, (_, index) => {
+        const byte = bytes[Math.floor(index / 8)];
+        return (byte >> (7 - (index % 8))) & 1;
       });
-      return out;
+      decodedPatterns.set(base64, pattern);
+      return pattern;
+    }
+
+    function sampleIndexFor(label, role, seed) {
+      const count = asset.samples_per_digit;
+      return (seed * 7 + label * 11 + role * 13) % count;
+    }
+
+    function exemplar(label, role, seed) {
+      const sampleIndex = sampleIndexFor(label, role, seed);
+      return {
+        label,
+        role,
+        sampleIndex,
+        pattern: decodeSample(asset.samples[String(label)][sampleIndex])
+      };
+    }
+
+    function union(patterns) {
+      const output = Array(CELLS).fill(0);
+      patterns.forEach((pattern) => {
+        pattern.forEach((value, index) => { output[index] = Math.max(output[index], value); });
+      });
+      return output;
     }
 
     function mulberry32(seed) {
@@ -565,171 +559,185 @@
       };
     }
 
-    function combination(values, order) {
-      const out = [];
-      function visit(start, chosen) {
-        if (chosen.length === order) {
-          out.push(chosen.slice());
-          return;
-        }
-        for (let i = start; i < values.length; i += 1) {
-          chosen.push(values[i]);
-          visit(i + 1, chosen);
-          chosen.pop();
-        }
-      }
-      visit(0, []);
-      return out;
-    }
-
-    function keyFor(indices) {
-      return indices.slice().sort((a, b) => a - b).join("-");
-    }
-
-    function averageRelation(indices, trace) {
-      if (indices.length < 2) return 0;
-      const pairs = combination(indices, 2);
-      return pairs.reduce((total, pair) => total + trace[keyFor(pair)], 0) / pairs.length;
-    }
-
     function corrupt(target, amount, random) {
-      const observed = blankPattern();
+      const observed = Array(CELLS).fill(0);
       target.forEach((value, index) => {
-        if (value === 1) {
+        if (value) {
           observed[index] = random() > amount * .86 ? 1 : 0;
         } else {
-          observed[index] = random() < amount * .17 ? 1 : 0;
+          observed[index] = random() < amount * .075 ? 1 : 0;
         }
       });
       return observed;
     }
 
     function cueFit(candidate, observed) {
-      let hit = 0;
+      let hits = 0;
       let missedObserved = 0;
       let unsupported = 0;
-      for (let i = 0; i < CELLS; i += 1) {
-        if (candidate[i] && observed[i]) hit += 1;
-        if (!candidate[i] && observed[i]) missedObserved += 1;
-        if (candidate[i] && !observed[i]) unsupported += 1;
+      let candidateCount = 0;
+      for (let index = 0; index < CELLS; index += 1) {
+        candidateCount += candidate[index];
+        if (candidate[index] && observed[index]) hits += 1;
+        if (!candidate[index] && observed[index]) missedObserved += 1;
+        if (candidate[index] && !observed[index]) unsupported += 1;
       }
-      return (1.2 * hit - 1.4 * missedObserved - .16 * unsupported) / Math.max(1, candidate.reduce((a, b) => a + b, 0));
+      return (1.20 * hits - 1.40 * missedObserved - .08 * unsupported) / Math.max(1, candidateCount);
     }
 
-    function f1(a, b) {
+    function compactTrace(pattern) {
+      const buckets = [0, 0, 0, 0, 0];
+      let total = 0;
+      pattern.forEach((value, index) => {
+        if (!value) return;
+        const x = index % SIDE;
+        const y = Math.floor(index / SIDE);
+        const quadrant = (y >= SIDE / 2 ? 2 : 0) + (x >= SIDE / 2 ? 1 : 0);
+        buckets[quadrant] += 1;
+        if (x >= 9 && x <= 18 && y >= 9 && y <= 18) buckets[4] += 1;
+        total += 1;
+      });
+      return buckets.map((count) => count / Math.max(1, total));
+    }
+
+    function traceFit(reference, observed) {
+      const totalDifference = reference.reduce((sum, value, index) => sum + Math.abs(value - observed[index]), 0);
+      return 1 - totalDifference / reference.length;
+    }
+
+    function f1(predicted, target) {
       let tp = 0;
       let fp = 0;
       let fn = 0;
-      for (let i = 0; i < CELLS; i += 1) {
-        if (a[i] && b[i]) tp += 1;
-        if (a[i] && !b[i]) fp += 1;
-        if (!a[i] && b[i]) fn += 1;
+      for (let index = 0; index < CELLS; index += 1) {
+        if (predicted[index] && target[index]) tp += 1;
+        if (predicted[index] && !target[index]) fp += 1;
+        if (!predicted[index] && target[index]) fn += 1;
       }
       return 2 * tp / Math.max(1, 2 * tp + fp + fn);
     }
 
     function supportCoverage(observed, target) {
-      let targetCount = 0;
+      let total = 0;
       let retained = 0;
-      for (let i = 0; i < CELLS; i += 1) {
-        if (target[i]) {
-          targetCount += 1;
-          retained += observed[i];
+      for (let index = 0; index < CELLS; index += 1) {
+        if (target[index]) {
+          total += 1;
+          retained += observed[index];
         }
       }
-      return retained / Math.max(1, targetCount);
+      return retained / Math.max(1, total);
     }
 
-    function drawPattern(context, pattern, kind) {
+    function drawPattern(context, pattern, type) {
+      const palette = { p1: "#60a5fa", p2: "#c4b5fd", cue: "#fbbf24", output: "#5eead4" };
       const width = context.canvas.width;
       const cell = width / SIDE;
       context.clearRect(0, 0, width, width);
       context.fillStyle = "#05111e";
       context.fillRect(0, 0, width, width);
-
       for (let y = 0; y < SIDE; y += 1) {
         for (let x = 0; x < SIDE; x += 1) {
-          const index = y * SIDE + x;
-          context.fillStyle = pattern[index] ? (kind === "cue" ? "#fbbf24" : "#5eead4") : "#0b1a2b";
-          context.fillRect(x * cell + 1, y * cell + 1, cell - 2, cell - 2);
+          const value = pattern[y * SIDE + x];
+          context.fillStyle = value ? palette[type] : "#0b1a2b";
+          context.fillRect(x * cell, y * cell, cell, cell);
         }
       }
-    }
-
-    function candidateNames(indices) {
-      return indices.map((index) => primitiveNames[index]).join(" + ");
-    }
-
-    function updateStorage() {
-      const primitiveCount = Number(document.getElementById("memory-count").value);
-      const pairCount = primitiveCount * (primitiveCount - 1) / 2;
-      const units = 144;
-      document.getElementById("memory-count-value").textContent = primitiveCount;
-      document.getElementById("composite-count").textContent = pairCount + " pairs";
-      document.getElementById("explicit-cost").textContent = (pairCount * units).toLocaleString();
-      document.getElementById("factorized-cost").textContent = ((primitiveCount * units) + pairCount).toLocaleString();
     }
 
     function selectedMode() {
       return document.querySelector('input[name="mode"]:checked').value;
     }
 
-    function getTrial() {
-      const order = Number(document.getElementById("order").value);
-      const noise = Number(document.getElementById("noise").value) / 100;
-      const seed = Number(document.getElementById("seed").value);
-      const mode = selectedMode();
-      const random = mulberry32(seed + order * 1009);
-      const options = targetSets[order];
-      const targetIndices = options[Math.floor(random() * options.length)];
-      const target = union(targetIndices);
-      const observed = corrupt(target, noise, random);
-      const allCandidates = combination([0, 1, 2, 3, 4], order).map((indices) => {
-        const pattern = union(indices);
-        const cue = cueFit(pattern, observed);
-        const aligned = averageRelation(indices, relationTrace);
-        const shuffled = averageRelation(indices, shuffledTrace);
-        const relation = mode === "aligned" ? aligned : mode === "shuffled" ? shuffled : 0;
-        const score = mode === "none" ? cue : .76 * cue + .24 * relation;
-        return { indices, pattern, cue, relation, score };
-      }).sort((a, b) => b.score - a.score);
+    function candidateFor(firstLabel, secondLabel, seed, observedTrace, mode) {
+      const first = exemplar(firstLabel, 1, seed);
+      const second = exemplar(secondLabel, 2, seed);
+      const pattern = union([first.pattern, second.pattern]);
+      const alignedTrace = compactTrace(pattern);
+      const shuffledFirst = exemplar((firstLabel + 3) % 10, 1, seed);
+      const shuffledSecond = exemplar((secondLabel + 7) % 10, 2, seed);
+      const shuffledTrace = compactTrace(union([shuffledFirst.pattern, shuffledSecond.pattern]));
+      const relation = mode === "aligned"
+        ? traceFit(alignedTrace, observedTrace)
+        : mode === "shuffled"
+          ? traceFit(shuffledTrace, observedTrace)
+          : 0;
+      return { firstLabel, secondLabel, first, second, pattern, relation };
+    }
 
-      const winner = allCandidates[0];
-      return { order, noise, seed, mode, targetIndices, target, observed, winner, allCandidates };
+    function getTrial() {
+      const firstLabel = Number(document.getElementById("p1").value);
+      const secondLabel = Number(document.getElementById("p2").value);
+      const seed = Number(document.getElementById("seed").value);
+      const noise = Number(document.getElementById("noise").value) / 100;
+      const mode = selectedMode();
+      const first = exemplar(firstLabel, 1, seed);
+      const second = exemplar(secondLabel, 2, seed);
+      const target = union([first.pattern, second.pattern]);
+      const observed = corrupt(target, noise, mulberry32(seed * 7919 + firstLabel * 101 + secondLabel * 17));
+      const observedTrace = compactTrace(observed);
+      const candidates = [];
+      DIGITS.forEach((candidateFirst) => {
+        DIGITS.forEach((candidateSecond) => {
+          const candidate = candidateFor(candidateFirst, candidateSecond, seed, observedTrace, mode);
+          candidate.cue = cueFit(candidate.pattern, observed);
+          candidate.score = mode === "none" ? candidate.cue : .76 * candidate.cue + .24 * candidate.relation;
+          candidates.push(candidate);
+        });
+      });
+      candidates.sort((left, right) => right.score - left.score);
+      return { firstLabel, secondLabel, first, second, target, observed, mode, noise, seed, winner: candidates[0], candidates };
+    }
+
+    function candidateName(candidate) {
+      return "P1: " + candidate.firstLabel + " + P2: " + candidate.secondLabel;
     }
 
     function renderResult(trial) {
-      const exact = keyFor(trial.winner.indices) === keyFor(trial.targetIndices);
+      const exact = trial.winner.firstLabel === trial.firstLabel && trial.winner.secondLabel === trial.secondLabel;
       const reconstructionF1 = f1(trial.winner.pattern, trial.target);
       const coverage = supportCoverage(trial.observed, trial.target);
+      const steps = Math.max(2, Math.min(9, Math.round(2 + (1 - coverage) * 6 + (exact ? 0 : 1))));
       const relationLabel = trial.mode === "aligned" ? "aligned" : trial.mode === "shuffled" ? "shuffled" : "absent";
-      const steps = Math.max(2, Math.min(8, Math.round(2 + (1 - coverage) * 6 + (exact ? 0 : 1))));
 
-      drawPattern(cueContext, trial.observed, "cue");
-      drawPattern(outputContext, trial.winner.pattern, "output");
+      drawPattern(contexts.p1, trial.first.pattern, "p1");
+      drawPattern(contexts.p2, trial.second.pattern, "p2");
+      drawPattern(contexts.cue, trial.observed, "cue");
+      drawPattern(contexts.output, trial.winner.pattern, "output");
+
+      document.getElementById("p1-caption").textContent = "Stored P1 · MNIST " + trial.firstLabel + " · exemplar " + (trial.first.sampleIndex + 1) + "/24";
+      document.getElementById("p2-caption").textContent = "Stored P2 · MNIST " + trial.secondLabel + " · exemplar " + (trial.second.sampleIndex + 1) + "/24";
       document.getElementById("exact").textContent = exact ? "Recovered" : "Missed";
       document.getElementById("f1").textContent = (reconstructionF1 * 100).toFixed(0) + "%";
       document.getElementById("cue-coverage").textContent = (coverage * 100).toFixed(0) + "%";
       document.getElementById("iterations").textContent = steps;
       document.getElementById("candidate").innerHTML =
-        "<strong>Top hypothesis: " + candidateNames(trial.winner.indices) + "</strong><br>" +
-        "Target constituent set is withheld from retrieval. Candidate score = " + trial.winner.score.toFixed(3) +
-        " (cue " + trial.winner.cue.toFixed(3) + "; " + relationLabel + " relation contribution " +
-        trial.winner.relation.toFixed(3) + ").";
+        "<strong>Top hypothesis: " + candidateName(trial.winner) + "</strong><br>" +
+        "Candidate score = " + trial.winner.score.toFixed(3) + " (cue " + trial.winner.cue.toFixed(3) +
+        "; " + relationLabel + " trace fit " + trial.winner.relation.toFixed(3) + ").";
       document.getElementById("trace").innerHTML =
-        "Stored primitive maps: A, B, C, D, E<br>" +
-        "Held-out source: " + candidateNames(trial.targetIndices) + " &nbsp;•&nbsp; " +
-        "Top-3 candidates: " + trial.allCandidates.slice(0, 3).map((item) => candidateNames(item.indices)).join(" / ");
-      document.getElementById("readout").textContent =
-        exact
-          ? "The candidate constituent set matches the hidden query source. Its union was constructed transiently from primitive maps."
-          : "The corrupted cue caused a competing candidate to win. Adjust the seed, noise, or contextual condition to inspect this failure mode.";
+        "Source pair retained only for evaluation: P1=" + trial.firstLabel + ", P2=" + trial.secondLabel + "<br>" +
+        "Seed " + trial.seed + " selected actual test exemplars " + (trial.first.sampleIndex + 1) + "/24 and " +
+        (trial.second.sampleIndex + 1) + "/24. Top-3: " + trial.candidates.slice(0, 3).map(candidateName).join(" / ");
+      document.getElementById("readout").textContent = exact
+        ? "The selected digit pair was recovered from the corrupted union. The displayed union was constructed transiently from the two candidate primitive maps."
+        : "A competing digit pair won under the selected corruption and context condition. Try a new seed, digit pair, or ablation to inspect the failure mode.";
       document.getElementById("status").textContent = exact ? "Retrieval complete" : "Retrieval mismatch";
+    }
+
+    function updateStorage() {
+      const primitiveCount = Number(document.getElementById("memory-count").value);
+      const pairCount = primitiveCount * (primitiveCount - 1) / 2;
+      const units = 784;
+      document.getElementById("memory-count-value").textContent = primitiveCount;
+      document.getElementById("composite-count").textContent = pairCount + " pairs";
+      document.getElementById("explicit-cost").textContent = (pairCount * units).toLocaleString();
+      document.getElementById("factorized-cost").textContent = ((primitiveCount * units) + pairCount).toLocaleString();
     }
 
     function runTrial() {
       runButton.disabled = true;
-      document.getElementById("status").textContent = "Scoring candidates";
+      document.getElementById("status").textContent = "Scoring 100 hypotheses";
       const trial = getTrial();
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.setTimeout(() => {
@@ -741,7 +749,6 @@
     document.getElementById("noise").addEventListener("input", (event) => {
       document.getElementById("noise-value").textContent = event.target.value + "%";
     });
-
     document.getElementById("memory-count").addEventListener("input", updateStorage);
     controls.addEventListener("submit", (event) => {
       event.preventDefault();
