@@ -321,7 +321,7 @@
       <p class="eyebrow">HHAN MNIST union recall lab</p>
       <h1>Can associative memory recover a union of handwritten digits it never stored?</h1>
       <p class="lede">
-        Select two MNIST digit classes, choose a seed, and create a noisy union. Each seed selects an independent real handwritten exemplar for \(P_1\) and \(P_2\); the decoder receives only the corrupted union and ranks transient, on-demand hypotheses.
+        Select two MNIST digit classes, choose a seed, and create a noisy union. Each seed selects an independent real handwritten exemplar for P₁ and P₂; the decoder receives only the corrupted union and ranks transient, on-demand hypotheses.
       </p>
       <div class="chips" aria-label="Experiment properties">
         <span class="chip">Real MNIST test exemplars</span>
@@ -340,7 +340,7 @@
       <div class="lab-heading">
         <div>
           <h2 id="lab-title">Run an MNIST union-retrieval trial</h2>
-          <p>The selected \(P_1 \cup P_2\) union is evaluated as a query-time composition, not stored as a template.</p>
+          <p>The selected P₁ ∪ P₂ union is evaluated as a query-time composition, not stored as a template.</p>
         </div>
         <span class="status" id="status" aria-live="polite">Ready</span>
       </div>
@@ -353,13 +353,13 @@
             <label>Primitive digit classes</label>
             <div class="digit-selects">
               <div>
-                <label for="p1">\(P_1\)</label>
+                <label for="p1">P₁</label>
                 <select id="p1" name="p1" aria-label="First primitive digit">
                   <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
                 </select>
               </div>
               <div>
-                <label for="p2">\(P_2\)</label>
+                <label for="p2">P₂</label>
                 <select id="p2" name="p2" aria-label="Second primitive digit">
                   <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8" selected>8</option><option value="9">9</option>
                 </select>
@@ -403,11 +403,11 @@
           <span class="pane-label">MNIST pattern space</span>
           <div class="canvas-grid">
             <figure>
-              <figcaption id="p1-caption">Stored primitive \(P_1\)</figcaption>
+              <figcaption id="p1-caption">Stored primitive P₁</figcaption>
               <canvas id="p1-canvas" width="224" height="224" aria-label="First MNIST primitive"></canvas>
             </figure>
             <figure>
-              <figcaption id="p2-caption">Stored primitive \(P_2\)</figcaption>
+              <figcaption id="p2-caption">Stored primitive P₂</figcaption>
               <canvas id="p2-canvas" width="224" height="224" aria-label="Second MNIST primitive"></canvas>
             </figure>
             <figure>
@@ -443,7 +443,7 @@
           <article class="step">
             <div class="step-num">01</div>
             <h3>Choose real MNIST primitives</h3>
-            <p>\(P_1,P_2 \in \{0,\ldots,9\}\) select digit classes. The displayed handwritten instances change with the seed; their union is never added to the stored bank.</p>
+            <p>P₁, P₂ ∈ {0, …, 9} select digit classes. The displayed handwritten instances change with the seed; their union is never added to the stored bank.</p>
           </article>
           <article class="step">
             <div class="step-num">02</div>
@@ -466,8 +466,8 @@
           <h2 id="scaling-title">Why form unions at query time?</h2>
           <p class="subtle">This panel is a scaling illustration, separate from the executable two-digit MNIST experiment above.</p>
           <p class="formula">
-            Explicit pair templates: \( \binom{M}{2} \times N \) cells<br>
-            Primitive bank + pair traces: \( M \times N + \binom{M}{2} \) scalars<br>
+            Explicit pair templates: C(M, 2) × N cells<br>
+            Primitive bank + pair traces: M × N + C(M, 2) scalars<br>
             A composite support is generated transiently, not inserted into the stored primitive bank.
           </p>
         </div>
@@ -481,7 +481,7 @@
             <div class="metric"><b id="explicit-cost">—</b><span>Explicit composite-map cells</span></div>
             <div class="metric"><b id="factorized-cost">—</b><span>Primitive-map cells + scalar traces</span></div>
           </div>
-          <p class="subtle">Uses \(N=784\) binary MNIST support units per primitive map. This is illustrative storage accounting, not a runtime or capacity guarantee.</p>
+          <p class="subtle">Uses N = 784 binary MNIST support units per primitive map. This is illustrative storage accounting, not a runtime or capacity guarantee.</p>
         </div>
       </div>
     </section>
