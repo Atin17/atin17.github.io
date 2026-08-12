@@ -733,9 +733,7 @@
         </div>
         <h1>Atin Srivastava</h1>
         <p class="subtitle">
-          Ph.D. researcher in Computer Science at <strong>Rutgers University</strong> (Computational Brain Lab).
-          I build <strong>neuron–astrocyte associative memory</strong> models, <strong>spiking and reinforcement-learning systems</strong>,
-          and <strong>closed‑loop motor-control</strong> systems. I am seeking Summer 2027 roles in NeuroAI, machine learning research, and neurotechnology.
+          Ph.D. researcher at <strong>Rutgers University</strong> building neuron–astrocyte memory, spiking/RL systems, and closed-loop control. Seeking Summer 2027 NeuroAI and AI/ML research internships.
         </p>
         <div class="cta-buttons">
           <a href="#research" class="btn btn-primary">Explore Research Projects</a>
@@ -758,7 +756,7 @@
     <section id="research">
       <div class="section-header">
         <h2 class="section-title">Active Research</h2>
-        <p class="section-subtitle">Active research with explicit evaluation scope and reproducible implementation priorities</p>
+        <p class="section-subtitle">Three active NeuroAI systems with reproducible evaluation.</p>
       </div>
       <div class="grid grid-3">
         <article class="card">
@@ -766,16 +764,7 @@
             <img src="astrocyte_research.png" alt="Neuron-Astrocyte Network Architecture" class="research-image" loading="lazy">
           </div>
           <h3>Neuron–Astrocyte Associative Memory</h3>
-          <p>
-            Developing astrocyte-inspired modulation mechanisms for context-tagged recall and compositional retrieval.
-            Current evaluation is restricted to held-out recall protocols and ablation controls that prevent target leakage;
-            benchmark claims will be reported only with their exact task, comparator, and evaluation protocol.
-          </p>
-          <ul>
-            <li>PyTorch experiments with configurable hyperparameter sweeps and held-out recall protocols</li>
-            <li>Ablation controls for context structure, timing, and shuffled conditions</li>
-            <li>Neuromorphic deployment design is an active engineering direction, not a completed hardware result</li>
-          </ul>
+          <p>Context-gated PyTorch associative memory evaluated with held-out recall and ablation controls.</p>
           <div class="project-links">
             <a href="https://github.com/Atin17/naam_rl" target="_blank" rel="noopener noreferrer">Public implementation base</a>
           </div>
@@ -783,15 +772,7 @@
 
         <article class="card">
           <h3>Memory Synthesis & Few‑Shot Bridging</h3>
-          <p>
-            Investigating how to compose novel memories from stored components rather than storing every composite.
-            The central question is whether compositional retrieval remains reliable under held-out primitive and composite tests.
-          </p>
-          <ul>
-            <li>Pretraining and adaptation protocols for sparse exemplars</li>
-            <li>Seed-matched controls that distinguish composition from direct storage</li>
-            <li>Failure-mode analysis for relation selection, context gating, and temporal contiguity</li>
-          </ul>
+          <p>Tests whether novel composites can be reconstructed from stored primitives under seed-matched controls.</p>
         </article>
 
         <article class="card">
@@ -799,15 +780,7 @@
             <img src="rehab_controller.png" alt="Closed-Loop Rehabilitation Controller System" class="research-image" loading="lazy">
           </div>
           <h3>Closed‑Loop Rehabilitation Controller</h3>
-          <p>
-            Building continuous-attractor spiking state maps with assistance-as-needed control for the InMotion Bionik robotic arm.
-            Assistance is designed to scale inversely with controller confidence while preserving patient engagement.
-          </p>
-          <ul>
-            <li>Evaluation targets: completion time, path deviation, and assistance work</li>
-            <li>Basin-volume analysis for controller-stability assessment</li>
-            <li>Adaptive support intended to promote patient engagement and recovery</li>
-          </ul>
+          <p>Spiking state maps for an InMotion Bionik arm, evaluated by completion time, path deviation, and assistance work.</p>
         </article>
       </div>
     </section>
@@ -815,17 +788,15 @@
     <section id="publications">
       <div class="section-header">
         <h2 class="section-title">Publications & Thesis</h2>
-        <p class="section-subtitle">Academic contributions and research outputs</p>
+        <p class="section-subtitle">Manuscripts, thesis, and interactive research evidence.</p>
       </div>
       <div class="grid">
         <article class="card">
           <h3>Hierarchical Hopfield–Astrocyte Networks for Compositional Associative Memory under Correlated Interference</h3>
           <div class="meta">Manuscript submitted · August 2026</div>
-          <p>
-            A context-gated Hopfield–astrocyte architecture that preserves correlated memory primitives and reconstructs unseen composites without storing them as full attractors.
-          </p>
+          <p>HHAN reached 83% mean primitive and composite recall on synthetic dials across η ∈ [0, 0.5], without storing composites as attractors.</p>
           <div class="info-box">
-            <p><strong>Interactive companion:</strong> Select two MNIST digit classes and a seed to form a held-out noisy union from independently chosen handwritten test exemplars; compare aligned, no-context, and shuffled-context retrieval controls.</p>
+            <p><strong>Interactive companion:</strong> 100 MNIST digit-pair hypotheses; compare aligned, no-context, and shuffled-context retrieval.</p>
           </div>
           <div class="project-links">
             <a href="./hhan-composition-lab.html">Launch HHAN Composition Lab</a>
@@ -836,10 +807,7 @@
         <div class="card">
           <h3>Excitatory–Inhibitory Recurrent SNN for Face Detection and Tracking by a Robotic Oculomotor Head</h3>
           <div class="meta">Master's Thesis • Rutgers University • 2024 • Advisor: K. Michmizos</div>
-          <p>
-            Developed a biologically-inspired spiking neural network for real-time face detection and tracking, 
-            demonstrating the potential of neuromorphic approaches for robotic vision systems.
-          </p>
+          <p>Master's thesis: biologically inspired SNN control for real-time robotic face tracking.</p>
           <a href="https://www.proquest.com/openview/a95a3ad649b612eaa28156167d50d2ba/1?pq-origsite=gscholar&cbl=18750&diss=y" target="_blank" rel="noopener noreferrer">
             View on ProQuest →
           </a>
@@ -848,10 +816,7 @@
         <div class="card">
           <h3>Cognition in Sensory Cortex</h3>
           <div class="meta">RUCCS Colloquium • Manuscript accepted (Academia Biology) • 2025</div>
-          <p>
-            Exploring the computational principles underlying cognitive processing in sensory cortical areas, 
-            bridging low-level perception with high-level reasoning.
-          </p>
+          <p>Computational principles linking sensory-cortical perception with higher-level reasoning.</p>
         </div>
       </div>
     </section>
@@ -859,7 +824,7 @@
     <section id="projects">
       <div class="section-header">
         <h2 class="section-title">Selected Projects</h2>
-        <p class="section-subtitle">Notable implementations and demonstrations</p>
+        <p class="section-subtitle">Public code and demonstrations.</p>
       </div>
       <div class="grid grid-2">
         <div class="card">
@@ -878,10 +843,7 @@
             </div>
           </div>
           <h3>Spiking Oculomotor Controller</h3>
-          <p>
-            Implemented a spiking neural-network controller in Python/ROS for a biomimetic robotic head.
-            The public code covers step, chirp, and circular experiments with trajectory and positional-error analysis.
-          </p>
+          <p>Python/ROS SNN controller tested on step, chirp, and circular gaze trajectories.</p>
           <div class="project-links">
             <a href="https://github.com/Atin17/Spiking-NN-Oculomotor-Head" target="_blank" rel="noopener noreferrer">Source code</a>
             <a href="https://www.youtube.com/watch?v=_d0Rdo6ptlw" target="_blank" rel="noopener noreferrer">Lab demonstration</a>
@@ -893,10 +855,7 @@
             <img src="neural_decoding.png" alt="NeuroAI Lab Platform" class="research-image" loading="lazy">
           </div>
           <h3>Neural Decoding Pipeline</h3>
-          <p>
-            Built a full-stack prototype for neural-timeseries ingestion, quality control, exploration, visualization,
-            model training, and experiment tracking. The repository includes reproducible local and Docker-based setup paths.
-          </p>
+          <p>End-to-end neural-timeseries pipeline with reproducible local and Docker setup paths.</p>
           <div class="project-links">
             <a href="https://github.com/Atin17/neuroai-lab-platform" target="_blank" rel="noopener noreferrer">Source code</a>
           </div>
@@ -904,10 +863,7 @@
 
         <div class="card">
           <h3>RL with Working & Episodic Memory</h3>
-          <p>
-            Reimplemented a reinforcement-learning architecture with working and episodic key-value memory,
-            contrastive predictive coding, and stop-gradient components to study memory-supported generalization.
-          </p>
+          <p>RL reimplementation combining key-value memory, contrastive predictive coding, and stop-gradient learning.</p>
           <div class="project-links">
             <a href="https://github.com/Atin17/Generalization-of-Reinforcement-Learners" target="_blank" rel="noopener noreferrer">Source code</a>
           </div>
@@ -919,35 +875,20 @@
     <section id="about">
       <div class="section-header">
         <h2 class="section-title">About Me</h2>
-        <p class="section-subtitle">Background, expertise, and academic journey</p>
+        <p class="section-subtitle">Training and research focus.</p>
       </div>
       <div class="grid grid-2">
         <div class="card">
           <h3>Academic Background</h3>
-          <p>
-            Currently pursuing a <strong>Ph.D. in Computer Science</strong> at Rutgers University with a perfect 4.0 GPA. 
-            My research is supervised by Prof. <a href="http://combra.cs.rutgers.edu/" target="_blank" rel="noopener noreferrer">Konstantinos Michmizos</a>
-            at the Computational Brain Lab.
-          </p>
+          <p>Ph.D. in Computer Science at Rutgers (4.0 GPA), advised by Prof. Konstantinos Michmizos.</p>
           <div class="info-box">
             <p><strong>Peer Reviewer:</strong> IEEE Engineering in Medicine and Biology Conference (EMBC)</p>
           </div>
-          <p>
-            Prior to my doctoral studies, I worked as a <strong>Software Engineer at Amdocs</strong>, 
-            developing microservices architectures and CI/CD pipelines.
-          </p>
+          <p>Former Software Engineer at Amdocs, focused on microservices and CI/CD.</p>
         </div>
         <div class="card">
           <h3>Research Interests</h3>
-          <p>My work sits at the intersection of neuroscience and artificial intelligence:</p>
-          <ul>
-            <li>Memory systems & consolidation mechanisms</li>
-            <li>Astrocyte modulation in neural networks</li>
-            <li>Recurrent & spiking neural dynamics</li>
-            <li>Neuromorphic hardware deployment</li>
-            <li>Motor control & learning algorithms</li>
-            <li>Neural decoding & brain-computer interfaces</li>
-          </ul>
+          <p>NeuroAI, astrocyte-modulated networks, spiking dynamics, RL, neuromorphic computing, and neural decoding.</p>
         </div>
       </div>
     </section>
@@ -955,30 +896,18 @@
     <section id="awards">
       <div class="section-header">
         <h2 class="section-title">Awards &amp; Teaching</h2>
-        <p class="section-subtitle">Academic recognition and undergraduate instruction</p>
+        <p class="section-subtitle">Academic recognition and teaching.</p>
       </div>
       <div class="grid grid-2">
         <article class="card">
           <h3>Excellent TA Award in Computer Science</h3>
           <div class="meta">Rutgers University Department of Computer Science · June 2026</div>
-          <p>
-            Recognized for outstanding achievement in the Ph.D. program through undergraduate instruction and academic support.
-          </p>
-          <ul>
-            <li>Taught permutations and combinations, probability, and graph theory to undergraduate students</li>
-            <li>Supported structured problem solving and foundational mathematical reasoning for computer science</li>
-          </ul>
+          <p>Taught permutations & combinations, probability, and graph theory to Rutgers undergraduates.</p>
         </article>
         <article class="card">
           <h3>Thapar Merit Scholarship</h3>
           <div class="meta">Thapar Institute of Engineering and Technology · 2016-2020</div>
-          <p>
-            Merit scholarship recipient throughout the B.E. in Computer Science program.
-          </p>
-          <ul>
-            <li>Ranked in the top 15 students for four consecutive years</li>
-            <li>Recognized for sustained academic performance in computer science</li>
-          </ul>
+          <p>Top 15 students for 4 consecutive years in the B.E. Computer Science program.</p>
         </article>
       </div>
     </section>
@@ -987,8 +916,7 @@
       <div class="contact-card">
         <h2>Let's Connect</h2>
         <p class="subtitle">
-          I am actively seeking a Summer 2027 research, AI/ML, or neurotechnology internship.
-          I welcome conversations about research collaborations and technically rigorous work in computational neuroscience and AI.
+          Seeking a Summer 2027 research, AI/ML, or neurotechnology internship.
         </p>
         <div class="contact-methods">
           <a href="mailto:atin.srivastava75@gmail.com" class="contact-method">
