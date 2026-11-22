@@ -382,6 +382,13 @@
       color: var(--brand);
     }
 
+    .stablebci-card { display: block; text-decoration: none; color: var(--text); }
+    .stablebci-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 5px; }
+    .stablebci-card:hover { border-color: var(--brand); }
+    .stablebci-meta { font-size: 14px; color: var(--brand); margin-bottom: 10px; }
+    .stablebci-open { display: block; font-size: 15px; color: var(--brand); font-weight: 600; }
+    .stablebci-status { display: block; margin-top: 12px; font-size: 14px; color: var(--text-secondary); }
+
     .research-image-container {
       width: 100%;
       margin-bottom: 20px;
@@ -741,7 +748,17 @@
         <h2 class="section-title">Active Research</h2>
         <p class="section-subtitle">Current work on memory, adaptive computation, and biologically inspired learning systems.</p>
       </div>
-      <div class="grid grid-3">
+      <div class="grid grid-2">
+        <a class="card stablebci-card" href="./stablebci.html" aria-label="Explore StableBCI: Adaptive Intracortical Neural Decoding">
+          <div class="research-image-container">
+            <img src="assets/stablebci/overview.svg" alt="StableBCI illustration: synthetic neural streams and decoded target direction" class="research-image" loading="lazy" width="1000" height="560">
+          </div>
+          <div class="stablebci-meta">Human intracortical BCI · C++20 / Python</div>
+          <h3>StableBCI: Adaptive Intracortical Neural Decoding</h3>
+          <p>Longitudinal human neural decoding, probabilistic target inference, and transferable directional reliability. Independently evaluated on 120 held-out T11 sessions, with a measured C++ streaming runtime.</p>
+          <span class="stablebci-open">Explore research, results &amp; interactive labs</span>
+          <span class="stablebci-status">Manuscript in preparation · Retrospective validation</span>
+        </a>
         <article class="card">
           <div class="research-image-container">
             <img src="astrocyte_research.png" alt="Neuron–Astrocyte Recurrent Reinforcement Learning Architecture" class="research-image" loading="lazy">

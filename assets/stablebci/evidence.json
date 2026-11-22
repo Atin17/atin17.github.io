@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "updated": "2026-11-22",
+  "units": "degrees",
+  "population": {
+    "participant": "T11",
+    "source_sessions": 66,
+    "later_sessions": 130,
+    "eligible_sessions": 120
+  },
+  "endpoint": "Median session mean angular error on common later post-100-trial rows",
+  "frozen": 69.38,
+  "calibration": {
+    "5": {
+      "U": 55.25,
+      "R": 54.25,
+      "R_T5": 54.02,
+      "supervised": 58.19
+    },
+    "10": {
+      "U": 48.72,
+      "R": 46.82,
+      "R_T5": 46.44,
+      "supervised": 48.47
+    },
+    "25": {
+      "U": 42.77,
+      "R": 41.56,
+      "R_T5": 40.96,
+      "supervised": 42.46
+    },
+    "50": {
+      "U": 40.29,
+      "R": 38.45,
+      "R_T5": 38.88,
+      "supervised": 40.23
+    },
+    "100": {
+      "U": 34.61,
+      "R": 32.25,
+      "R_T5": 32.3,
+      "supervised": 32.1
+    }
+  },
+  "primary_comparison": {
+    "estimand": "Equal-session mean R minus U at 100 raw trials",
+    "difference_degrees": -2.19,
+    "session_bootstrap_95_ci": [
+      -2.73,
+      -1.7
+    ]
+  },
+  "runtime": {
+    "platform": "Windows x64, Normal priority",
+    "duration_seconds": 3600,
+    "scheduled_releases": 180000,
+    "issued_commands": 179268,
+    "skipped_releases": 732,
+    "processing_p99_ms": 0.0093,
+    "logical_output_p99_ms": 3.091227,
+    "logical_output_max_ms": 9.9938,
+    "ordinary_control_allocations": 0,
+    "max_python_difference": 4.274358644806853e-15,
+    "trial_delivery": {
+      "completed": 727,
+      "delivered": 121,
+      "completion_epoch_rejections": 606,
+      "pool_rejections": 0,
+      "queue_rejections": 0,
+      "installed_updates": 2
+    }
+  },
+  "provenance": [
+    {
+      "artifact": "T11/SUMMARY.json",
+      "sha256": "84df91cacc5e046cbc003bb85597fe3cbfe94a1b69065ac4019f528f2c722d87"
+    },
+    {
+      "artifact": "hour_release_v5/verification.json"
+    },
+    {
+      "artifact": "throughput_audit/V5_RECONSTRUCTION.json"
+    },
+    {
+      "artifact": "runtime_cpp/THROUGHPUT_AUDIT.md"
+    }
+  ],
+  "limitations": [
+    "Retrospective participant-specific neural decoders; cross-participant transfer concerns the reliability estimator.",
+    "No participant recordings or fitted research weights are distributed with this page.",
+    "Browser toys use synthetic models, not the research decoder.",
+    "Historical cursor feedback and software replay do not establish autonomous closed-loop control.",
+    "Runtime adaptation availability remains unqualified due to scheduler/epoch coupling."
+  ],
+  "dataset": "https://doi.org/10.5061/dryad.x0k6djj1h"
+}
