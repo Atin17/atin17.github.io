@@ -23,7 +23,7 @@
   <a href="#main" class="skip">Skip to content</a>
   <header class="top"><nav class="wrap" aria-label="Research navigation">
     <a class="brand" href="./index.html#research">Atin Srivastava <span class="muted">/ Research</span></a>
-    <div class="nav"><a href="#research">Approach</a><a href="#evidence">Evidence</a><a href="#uncertainty">Reliability lab</a><a href="#runtime">Runtime</a></div>
+    <div class="nav"><a href="#signal-processing">Preprocessing</a><a href="#research">Approach</a><a href="#evidence">Evidence</a><a href="#uncertainty">Reliability lab</a><a href="#runtime">Runtime</a></div>
   </nav></header>
   <main id="main" class="wrap">
     <section class="hero" aria-labelledby="title">
@@ -57,6 +57,38 @@
     <div class="status"><strong>Research status:</strong> manuscript in preparation. Retrospective T5/T11 algorithm evaluation and C++ software replay are complete; runtime qualification remains open. Autonomous human closed-loop stabilization has not been established.</div>
     <div class="stats" aria-label="Project at a glance"><div><strong>120</strong><span>held-out T11 sessions</span></div><div><strong>69.38° → 32.25°</strong><span>median directional error, frozen to R</span></div><div><strong>192</strong><span>source channels retained</span></div><div><strong>1 hour</strong><span>measured Windows x64 replay</span></div></div>
     <noscript><p class="noscript">The research text and static figures are available without JavaScript. Enable JavaScript to use the educational toys and calibration-budget explorer.</p></noscript>
+
+    <section class="contributions" aria-labelledby="contributions-title">
+      <div class="eyebrow">Project at a glance</div>
+      <h2 id="contributions-title">Key contributions</h2>
+      <div class="contribution-grid">
+        <article><h3>Decoding research</h3><p>Audited human neural features, built causal preprocessing, and separated cross-session mapping failures from recoverable directional information.</p></article>
+        <article><h3>Independent validation</h3><p>Evaluated a frozen recalibration algorithm on 120 later T11 sessions, including an unchanged T5-trained reliability estimator.</p></article>
+        <article><h3>C++ systems engineering</h3><p>Implemented preallocated inference and asynchronous Python updates; measured one-hour replay performance and diagnosed an admission failure.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="signal-processing" aria-labelledby="signal-title">
+      <div class="section-intro"><div class="eyebrow">From neural signals to decoder inputs</div><h2 id="signal-title">Signal processing first.<br>Then boundary-safe preprocessing.</h2><p class="lead">StableBCI starts from released threshold-crossing counts and spike-band-power features on a nominal 10-ms grid. I audited and transformed these supplied features; acquisition and raw-voltage feature extraction were performed upstream by the original investigators.</p></div>
+      <ol class="signal-chain" aria-label="Conceptual signal-processing chain and project scope">
+        <li><span class="scope supplied">Upstream · studied</span><h3>Extracellular recording</h3><p>Electrode referencing, amplification, anti-alias filtering and analog-to-digital conversion produce sampled voltages.</p></li>
+        <li><span class="scope supplied">Upstream · studied</span><h3>Signal conditioning</h3><p>Digital referencing, spike-band filtering and artifact checks prepare voltages for the recording protocol's feature extractor.</p></li>
+        <li><span class="scope supplied">Provided in the release</span><h3>Neural features</h3><p>Threshold-crossing counts summarize detected events; spike-band power summarizes signal energy. These are population features, not sorted single-neuron identities.</p></li>
+        <li><span class="scope implemented">Implemented in StableBCI</span><h3>Decoder-ready histories</h3><p>Verified channel order, aligned timing, explicit validity masks, source-only normalization and causal aggregation produce model inputs.</p></li>
+      </ol>
+      <p class="caption">Conceptual acquisition chain, not a claim that every session used identical filters or thresholds. A 10-ms feature bin is a nominal 100-Hz feature grid, not the original voltage sampling rate. The original investigators' <a href="https://github.com/nptl-stanford/array-paper" target="_blank" rel="noopener noreferrer">analysis code and example notebooks</a> provide the dataset-method context.</p>
+      <div class="preprocessing-split">
+        <div><span class="scope implemented">Work performed</span><h3>Preprocessing I implemented and verified</h3><ul class="preprocessing-checks">
+          <li><strong>Timing and identity.</strong> Checked timestamps, nominal bin intervals, physical channel correspondence and recording block IDs; retained all 192 source channels for T5/T11.</li>
+          <li><strong>Data integrity.</strong> Inspected nonfinite coordinates and features, low-activity channels, cursor resets and held-position update cadence; retained explicit validity and trial/block masks.</li>
+          <li><strong>Behavioral alignment.</strong> Used zero-based, end-exclusive attempt intervals. Kinematic targets and neural windows do not cross block boundaries or flagged transitions; attempt membership alone does not mean movement.</li>
+          <li><strong>Feature aggregation.</strong> Summed counts and averaged supplied power features over declared windows. Directional decoding uses 300-ms causal histories; history duration and the runtime's nominal 20-ms output period are separate choices.</li>
+          <li><strong>Partition isolation.</strong> Fitted preprocessing and decoder choices only on permitted training/validation observations. Causal adaptation applies preceding state before updating it with the current sample.</li>
+          <li><strong>Units and provenance.</strong> Preserved task coordinates without inventing a cm/s conversion, saved channel order and fitted parameters, and verified the C++ inference path against Python.</li>
+        </ul></div>
+        <div class="panel upstream-panel"><span class="scope supplied">Studied · not performed on raw data</span><h3>Additional requirements for a raw-voltage pipeline</h3><p>A deployment starting from electrode voltages would need a verified acquisition clock and sample rate; reference and filter definitions; saturation, clipping and artifact checks; noise estimation; threshold calibration; and reproducible feature extraction.</p><p>I studied how these choices affect signal-to-noise ratio, channel stability and decoding latency. They were not reimplemented or validated on raw waveforms in this feature-level dataset.</p><details><summary>Filtering, spike detection and causality</summary><p>Filter bands and thresholds must follow the acquisition protocol. Threshold-crossing detection requires a documented noise estimate, event definition and treatment of repeated crossings. Power extraction requires a declared band and aggregation rule. Causal filters add delay that belongs in the timing budget; forward–backward zero-phase filtering uses future samples and cannot be silently imported into an online decoder.</p></details><details><summary>Spike sorting is a different analysis choice</summary><p>Waveform extraction, unit clustering, refractory-period checks and unit-quality assessment are relevant when identifying individual neurons. StableBCI instead uses supplied threshold crossings and power features. It does not claim to have isolated or tracked single units across days.</p></details><details><summary>Quality control must respect held-out data</summary><p>Channel rejection, artifact thresholds, normalization and feature selection can change the apparent transfer problem. Their rules must be frozen or estimated within the permitted source partitions; target-day behavior cannot be used to choose preprocessing for a label-free adaptation result.</p></details></div>
+      </div>
+    </section>
 
     <section class="section" id="research" aria-labelledby="approach-title">
       <div class="section-intro"><div class="eyebrow">The research question</div><h2 id="approach-title">Useful information can remain.<br>The recorded mapping can change.</h2><p class="lead">A decoder can perform well within one session and transfer poorly to another. StableBCI separates the information available in a recording from the ability to recover its mapping without instructed target labels.</p></div>
