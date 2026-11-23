@@ -182,3 +182,19 @@ function renderSimulation(){
 $('run-simulation').addEventListener('click',renderSimulation);
 window.addEventListener('resize',()=>{drawStream();drawPosterior();drawBudget(selectedBudget);});
 prefill();drawStream();drawPosterior();updateSimLabels();renderSimulation();
+
+// Preserve deep links when a technical section lives inside a closed disclosure.
+function revealLinkedDetails() {
+  let id;
+  try { id=decodeURIComponent(location.hash.slice(1)); } catch { return; }
+  const target=document.getElementById(id);
+  if(!target)return;
+  let parent=target, opened=false;
+  while(parent) {
+    if(parent.tagName==='DETAILS'&&!parent.open){parent.open=true;opened=true;}
+    parent=parent.parentElement;
+  }
+  if(opened)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+}
+window.addEventListener('hashchange',revealLinkedDetails);
+revealLinkedDetails();
